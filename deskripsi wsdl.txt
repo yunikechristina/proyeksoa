@@ -1,0 +1,1 @@
+Service ini digunakan untuk aplikasi review film. Adapun fitur-fitur yang dibuat adalah add film, update film, delete film, read film by id (search), read all film serta notifikasi apabila muncul film terbaru. Atribut-atribut film meliputi id film, judul film (title), tahun pembuatan film, aktor yang berperan, genre film dan ulasan film.
