@@ -79,7 +79,7 @@ public function delete_movie(){
     }
 }
 
-public function search($name){
+public function search_movie($name){
     $sql = "SELECT * FROM movie WHERE judul LIKE '%".$name."%'";
     $res = mysqli_query($this->db->con, $sql);
     $return = array();
@@ -89,16 +89,19 @@ public function search($name){
     return $return;
   }
 };
-require_once '../database.php';
-$db = new Database();
-$movie = new movie($db);
-print_r($movie->search('z'));
-//BARU TAK PERIKSA SEARCH NYA
-//print_r($movie->load(1));
+
+//require_once '../database.php';
+//$db = new Database();
+//$movie = new movie($db);
+//print_r($movie->search_movie('z'));
 //print_r($movie->load_all());
+//add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre
+//print_r($movie->add_movie("Thor: Ragnarok", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarök, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));
+
+//print_r($movie->load(2));
 //print_r($movie->get_data());
-//print_r($movie->add("nama 1", 11));
-//print_r($movie->edit("fanta", 55));
-//print_r($movie->delete());
+//edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
+//print_r($movie->edit_movie("Thor: Ragnarök", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarok, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));
+//print_r($movie->delete_movie());
 
  ?>
