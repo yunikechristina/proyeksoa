@@ -22,5 +22,6 @@ class movie{
         return array('status' => 0, 'msg' => 'Cannot Add Data to Database');
     }
   }
+  ".kajefh";
 };
  ?>
