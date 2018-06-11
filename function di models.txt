@@ -1,0 +1,42 @@
+USER.PHP BLM DICATAT
+IMG DI MOVIE BELUM DICOBA DENGAN BLOB
+
+artis.php
+load($id)
+load_all()
+get_data()
+add_artis($nama)
+edit_artis($nama)
+delete_artis()
+search_artis_by_nama($nama)
+
+detail_artis.php
+load($id)
+load_all()
+get_data()
+add_detail_artis($peran, $id_artis, $id_movie)
+edit_detail_artis($peran, $id_artis, $id_movie)
+delete_detail_artis()
+search_detail_artis_by_peran($peran)
+search_detail_artis_by_artis($id_artis)
+search_detail_artis_by_movie($id_movie)
+
+komentar.php
+load($id)
+load_all()
+get_data()
+add_komentar($komen, $id_user, $id_movie)
+edit_komentar($komen, $id_user, $id_movie)
+delete_komentar()
+search_komentar_by_komen($komen)
+search_komentar_by_user($id_user)
+search_komentar_by_movie($id_movie)
+
+movie.php
+load($id)
+load_all()
+get_data()
+add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
+edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
+delete_movie()
+search_movie($name)
