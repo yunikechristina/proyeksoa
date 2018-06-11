@@ -25,7 +25,7 @@ class movie{
   ".kajefh";
 };
 
-public function add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
+public function update($judul,$tahun,$sinopsis,$img,$trailer,$genre){
     $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$img."','".$trailer."','".$genre."')";
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
