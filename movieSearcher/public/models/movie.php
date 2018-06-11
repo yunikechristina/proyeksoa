@@ -22,10 +22,11 @@ class movie{
         return array('status' => 0, 'msg' => 'Cannot Add Data to Database');
     }
   }
+  ".kajefh";
 };
 
 public function edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
-    $sql = "UPDATE movie SET judul='" .$judul. "', tahun='".$tahun."' WHERE id =".$this->id;
+    $sql = "UPDATE movie SET judul='" .$judul. "', tahun='".$tahun."', sinopsis='" .$sinopsis. "', img='".$img."', trailer='" .$trailer. "', genre='".$genre."' WHERE id =".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
