@@ -24,8 +24,8 @@ class movie{
   }
 };
 
-public function add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
-    $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$img."','".$trailer."','".$genre."')";
+public function edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
+    $sql = "UPDATE movie SET judul='" .$judul. "', tahun='".$tahun."' WHERE id =".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
