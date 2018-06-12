@@ -67,9 +67,9 @@ class user{
     }
   }
 
-  public function update_user($nama, $email, $password, $subscribe,$id){
+  public function update_user($nama, $email, $password, $subscribe){
     $password = md5($password);
-    $sql = "UPDATE user SET nama = '".$nama."', email = '".$email."', password = '".$password."', subscribe = '".$subscribe."' WHERE id = ".$id;
+    $sql = "UPDATE user SET nama = '".$nama."', email = '".$email."', password = '".$password."', subscribe = '".$subscribe."' WHERE id = ".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
@@ -78,11 +78,11 @@ class user{
     }
   }
 
-  public function subscribe($subscribe,$id){
-    $sql = "SELECT subscribe FROM user WHERE id = ".$id;
+  public function subscribe($subscribe){
+    $sql = "SELECT subscribe FROM user WHERE id = ".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if($res = 'true'){
-      $sql = "UPDATE user SET subscribe = 'false' WHERE id = ".$id;
+      $sql = "UPDATE user SET subscribe = 'false' WHERE id = ".$this->id;
       $res = mysqli_query($this->db->con, $sql);
       if ($res){
           return array('status' => 1, 'msg' => 'Success');
@@ -90,7 +90,7 @@ class user{
           return array('status' => 0, 'msg' => 'Cannot Edit Data in Database');
       }
     }else{
-      $sql = "UPDATE user SET subscribe = 'true' WHERE id = ".$id;
+      $sql = "UPDATE user SET subscribe = 'true' WHERE id = ".$this->id;
       $res = mysqli_query($this->db->con, $sql);
       if ($res){
           return array('status' => 1, 'msg' => 'Success');
