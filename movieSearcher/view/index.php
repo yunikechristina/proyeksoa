@@ -59,13 +59,46 @@
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
                     </li>
+                    <li>
+                        <a href="basic-table.html" class="waves-effect"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Sign Out</a>
+                    </li>
                 </ul>
             </div>
     </div>
     <div id="page-wrapper">
     	<div class="container-fluid">
-    		<div class="row row bg-title"><div class="col"><h1>Movie List</h1></div>
+    		<div class="row row bg-title">
+    			<div class="col"><h1>Movie List</h1></div>
+    			<div class="text-right">
+                    <button class="btn btn-success" style="margin-top: 10px;" data-toggle="modal" data-target="#add-product-modal">Add Movie</button>
+                </div>
     		</div>
+    		<div class="row">
+            <nav class="navbar navbar-light bg-light">
+                <div class="form-inline">
+                    <input class="form-control mr-sm-2" id="namaMovie" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="search">Search</button>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="20%">Movie Title</th>
+                            <th width="10%">Year</th>
+                            <th width="20%">Genre</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movie-table">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     	</div>
 	</div>
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
