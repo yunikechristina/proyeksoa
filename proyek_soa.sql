@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2018 at 12:41 PM
+-- Generation Time: Jun 12, 2018 at 08:20 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -116,6 +116,28 @@ INSERT INTO `movie` (`id`, `judul`, `tahun`, `sinopsis`, `img`, `trailer`, `genr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `trailer`
+--
+
+CREATE TABLE `trailer` (
+  `id` int(11) NOT NULL,
+  `link` text NOT NULL,
+  `id_movie` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `trailer`
+--
+
+INSERT INTO `trailer` (`id`, `link`, `id_movie`) VALUES
+(1, 'https://www.youtube.com/watch?v=6ZfuNTqbHE8', 1),
+(2, 'https://www.youtube.com/watch?v=sAOzrChqmd0', 1),
+(3, 'https://www.youtube.com/watch?v=3VbHg5fqBYw', 1),
+(4, 'https://www.youtube.com/watch?v=pVxOVlm_lE8', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -133,10 +155,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nama`, `email`, `password`, `status`, `subscribe`) VALUES
-(1, 'admin', 'admin@gmail.com', 'admin', 'admin', 'false'),
-(2, 'yunike', 'yunike@gmail.com', 'yunike', 'user', 'true'),
-(3, 'claudia', 'claudia@gmail.com', 'claudia', 'user', 'false'),
-(4, 'amanda', 'amanda@gmail.com', 'amanda', 'user', 'true'),
+(1, 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'admin'),
+(2, 'yunike', 'yunike@gmail.com', '1291ef032389ef8cbf122d150bc0ad16', 'user', 'true'),
+(3, 'claudia', 'claudia@gmail.com', '2b9ff3efc4a999ecfacd18c4bbc57a2e', 'user', 'false'),
+(4, 'amanda', 'amanda@gmail.com', '6209804952225ab3d14348307b5a4a27', 'user', 'true'),
 (5, 'satria', 'satria@gmail.com', '477054c78baea7a1242f79d898a2ca46', 'user', 'false');
 
 --
@@ -168,6 +190,12 @@ ALTER TABLE `movie`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `trailer`
+--
+ALTER TABLE `trailer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -181,13 +209,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `artis`
 --
 ALTER TABLE `artis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `detail_artis`
 --
 ALTER TABLE `detail_artis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `komentar`
@@ -200,6 +228,12 @@ ALTER TABLE `komentar`
 --
 ALTER TABLE `movie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `trailer`
+--
+ALTER TABLE `trailer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`

@@ -60,10 +60,11 @@ class user{
   public function login($email,$password){
     $sql = "SELECT password FROM user WHERE email = '".$email."'";
     $res = mysqli_query($this->db->con, $sql);
-    if(password_verify($password, $res)){
+    $row = mysqli_fetch_assoc($res);
+    if(md5($password)==$row['password']){
       return array('status' => 1, 'msg' => 'Success');
     }else{
-      return array('status' => 0, 'msg' => 'email or password failed');
+      return array('status' => 2, 'msg' => 'Email or password failed');
     }
   }
 
@@ -116,13 +117,14 @@ class user{
 //$db = new Database();
 //$movie = new user($db);
 //register($nama, $email, $password, $status, $subscribe)
-//print_r($movie->register("satria", "satria@gmail.com", "satria", "user", "false"));
+//print_r(json_encode($movie->register("satria", "satria@gmail.com", "satria", "user", "false")));
 
 //login($email,$password)
-//print_r($movie->login("satria@gmail.com", "satria"));
+//print_r(json_encode($movie->login("satria@gmail.com", "satria")));
 
 //update_user($nama, $email, $password, $subscribe,$id)
-//print_r($movie->update_user(2));
+//$movie->load(4);
+//print_r($movie->update_user("amanda","amanda@gmail.com","amanda","true"));
 //subscribe($subscribe,$id)
 //print_r($movie->load_all());
 //print_r($movie->add_detail_artis("Sherlock",1,1));
