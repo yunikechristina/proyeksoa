@@ -6,7 +6,7 @@ class movie{
   public $judul;
   public $tahun;
   public $sinopsis;
-  public $img;
+  public $id_image;
   public $trailer;
   public $genre;
 
@@ -22,7 +22,7 @@ class movie{
     $this->judul = $data['judul'];
     $this->tahun = $data['tahun'];
     $this->sinopsis = $data['sinopsis'];
-    $this->img = $data['img'];
+    $this->id_image = $data['id_image'];
     $this->trailer = $data['trailer'];
     $this->genre = $data['genre'];
   }
@@ -43,14 +43,14 @@ class movie{
       'judul'=>$this->judul,
       'tahun'=>$this->tahun,
       'sinopsis'=>$this->sinopsis,
-      'img'=>$this->img,
+      'id_image'=>$this->id_image,
       'trailer'=>$this->trailer,
       'genre'=>$this->genre
     );
   }
 
-  public function add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
-    $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$img."','".$trailer."','".$genre."')";
+  public function add_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre){
+    $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$id_image."','".$trailer."','".$genre."')";
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
@@ -59,8 +59,8 @@ class movie{
     }
   }
 
-public function edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre){
-    $sql = "UPDATE movie SET judul='".$judul. "', tahun='".$tahun."', sinopsis='".$sinopsis. "', img='".$img."', trailer='" .$trailer. "', genre='".$genre."' WHERE id =".$this->id;
+public function edit_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre){
+    $sql = "UPDATE movie SET judul='".$judul. "', tahun='".$tahun."', sinopsis='".$sinopsis. "', id_image='".$id_image."', trailer='" .$trailer. "', genre='".$genre."' WHERE id =".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
@@ -90,18 +90,18 @@ public function search_movie($name){
   }
 };
 
-//require_once '../database.php';
-//$db = new Database();
-//$movie = new movie($db);
+require_once '../database.php';
+$db = new Database();
+$movie = new movie($db);
+
 //print_r($movie->search_movie('z'));
 //print_r($movie->load_all());
-//add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre
+//add_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre
 //print_r($movie->add_movie("Thor: Ragnarok", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarök, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));
 
 //print_r($movie->load(2));
 //print_r($movie->get_data());
-//edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
+//edit_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre)
 //print_r($movie->edit_movie("Thor: Ragnarök", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarok, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));
 //print_r($movie->delete_movie());
-
  ?>
