@@ -6,8 +6,6 @@ class movie{
   public $judul;
   public $tahun;
   public $sinopsis;
-  public $id_image;
-  public $trailer;
   public $genre;
 
   public function __construct($db){
@@ -22,8 +20,6 @@ class movie{
     $this->judul = $data['judul'];
     $this->tahun = $data['tahun'];
     $this->sinopsis = $data['sinopsis'];
-    $this->id_image = $data['id_image'];
-    $this->trailer = $data['trailer'];
     $this->genre = $data['genre'];
   }
 
@@ -43,14 +39,12 @@ class movie{
       'judul'=>$this->judul,
       'tahun'=>$this->tahun,
       'sinopsis'=>$this->sinopsis,
-      'id_image'=>$this->id_image,
-      'trailer'=>$this->trailer,
       'genre'=>$this->genre
     );
   }
 
-  public function add_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre){
-    $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$id_image."','".$trailer."','".$genre."')";
+  public function add_movie($judul,$tahun,$sinopsis,$genre){
+    $sql = "INSERT INTO movie VALUES(default, '".$judul."',".$tahun.",'".$sinopsis."','".$genre."')";
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
@@ -59,8 +53,8 @@ class movie{
     }
   }
 
-public function edit_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre){
-    $sql = "UPDATE movie SET judul='".$judul. "', tahun='".$tahun."', sinopsis='".$sinopsis. "', id_image='".$id_image."', trailer='" .$trailer. "', genre='".$genre."' WHERE id =".$this->id;
+public function edit_movie($judul,$tahun,$sinopsis,$genre){
+    $sql = "UPDATE movie SET judul='".$judul. "', tahun=".$tahun.", sinopsis='".$sinopsis. "', genre='".$genre."' WHERE id =".$this->id;
     $res = mysqli_query($this->db->con, $sql);
     if ($res){
         return array('status' => 1, 'msg' => 'Success');
