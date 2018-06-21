@@ -113,26 +113,18 @@ $app->get('/user',function (Request $request, Response $response, array $args){
     return $newResponse;
 });
 
-$app->post('/user/{stat}', function (Request $request, Response $response, array $args) {
+$app->post('/user/login', function (Request $request, Response $response, array $args) {
     global $db;
-    $stat = $args['stat'];
     $data = $request->getParsedBody();
     $user_model = new user($db);
-    if ($stat == 1){
-        $body = $user_model->login($data['email'], $data['password']);    
-    } 
-    else if ($stat == 2){
-        $body = $user_model->register($data['nama'], $data['email'],$data['password'], $data['status'], $data['subscribe']);    
-    }
-    
+    $body = $user_model->login($data['email'], $data['password']);    
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
 
-/*
-$app->post('/user',function (Request $request, Response $response, array $args){
+$app->post('/user/register',function (Request $request, Response $response, array $args){
 	global $db;
     $data = $request->getParsedBody();
     $user_model = new user($db);
@@ -142,7 +134,6 @@ $app->post('/user',function (Request $request, Response $response, array $args){
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
-*/
 
 $app->put('/user/subscribe/{id}', function (Request $request, Response $response, array $args) {
     global $db;
@@ -152,6 +143,7 @@ $app->put('/user/subscribe/{id}', function (Request $request, Response $response
     $user_model->load($id);
     $body = $user_model->subscribe($data['subscribe']);
     $response->getBody()->write(json_encode($body));
+
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
@@ -164,6 +156,7 @@ $app->put('/user/{id}', function (Request $request, Response $response, array $a
     $user_model->load($id);
     $body = $user_model->update_user($data['nama'], $data['email'], $data['password'], $data['subscribe']);
     $response->getBody()->write(json_encode($body));
+
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
@@ -225,15 +218,6 @@ $app->get('/movie',function (Request $request, Response $response, array $args){
 });
 
 
-
-$app->get('/movie', function (Request $request, Response $response, array $args){
-    global $db;
-    $movie_model = new movie($db);
-    $body = $movie_model->load_all();
-    $response->getBody()->write(json_encode($body));
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
 
 $app->post('/movie',function (Request $request, Response $response, array $args){
     global $db;
