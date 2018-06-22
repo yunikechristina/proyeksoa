@@ -379,6 +379,46 @@ $app->get('/trailer',function (Request $request, Response $response, array $args
     return $newResponse;
 });
 
+$app->post('/trailer',function (Request $request, Response $response, array $args){
+    global $db;
+    $data = $request->getParsedBody();
+    $trailer_model = new trailer($db);
+    $body = $komen_model->add_trailer($data['link'],$data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->put('/trailer/{id}', function (Request $request, Response $response, array $args){
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $trailer_model = new trailer($db);
+    $trailer_model->load($id);
+    $body = $komen_model->edit_trailer($data['link'],$data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->delete('/trailer/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $trailer_model = new trailer($db);
+    $trailer_model->load($id);
+    $body = $trailer_model->delete_trailer();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')
+                            ->withHeader('Access-Control-Allow-Origin', '*')
+                            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    return $newResponse;
+});
+
 
 
 $app->run();
