@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -9,6 +9,7 @@ require 'models/artis.php';
 require 'models/user.php';
 require 'models/movie.php';
 require 'models/komentar.php';
+require 'models/trailer.php';
 
 $db = new Database();
 $app = new \Slim\App;
@@ -60,7 +61,7 @@ $app->post('/artis',function (Request $request, Response $response, array $args)
 });
 
 $app->put('/artis/{id}',function (Request $request, Response $response, array $args){
-	global $db; 
+	global $db;
 	$id = $args['id'];
 	$data= $request->getParsedBody();
 	$artis_model = new artis($db);
@@ -117,7 +118,7 @@ $app->post('/user/login', function (Request $request, Response $response, array 
     global $db;
     $data = $request->getParsedBody();
     $user_model = new user($db);
-    $body = $user_model->login($data['email'], $data['password']);    
+    $body = $user_model->login($data['email'], $data['password']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -177,7 +178,7 @@ $app->delete('/user/{id}', function (Request $request, Response $response, array
     return $newResponse;
 });
 
-/* MOVIE 
+/* MOVIE
 add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
 edit_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)
 delete_movie()
@@ -216,8 +217,6 @@ $app->get('/movie',function (Request $request, Response $response, array $args){
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
-
-
 
 $app->post('/movie',function (Request $request, Response $response, array $args){
     global $db;
@@ -261,10 +260,19 @@ $app->delete('/movie/{id}', function (Request $request, Response $response, arra
 
 
 /* KOMENTAR
-search_komentar_by_komen($komen)
-search_komentar_by_user($id_user)
 search_komentar_by_movie($id_movie)
+*/
+$app->get('/komentar/search/{komen}',function (Request $request, Response $response, array $args){
+    global $db;
+    $nama = $args['nama'];
+    $komen_model = new komentar($db);
+    $komen_model->search_komentar_by_movie($id_movie);
+    $body = $komen_model->get_data();
+    $response->getBody()->write(json_encode($body));
 
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
 
 $app->get('/komentar/{id}', function (Request $request, Response $response, array $args) {
     global $db;
@@ -282,7 +290,7 @@ $app->get('/komentar',function (Request $request, Response $response, array $arg
     global $db;
     $komen_model = new komentar($db);
     $komen_model->load_all();
-    $response->getBody()->write(json_endode($body));
+    $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
@@ -292,7 +300,7 @@ $app->post('/komentar',function (Request $request, Response $response, array $ar
     global $db;
     $data = $request->getParsedBody();
     $komen_model = new komentar($db);
-    $body = $user_model->add_komentar($data['komen'], $data['id_user'], $data['id_movie']);
+    $body = $komen_model->add_komentar($data['komen'], $data['id_user'], $data['id_movie']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -305,7 +313,7 @@ $app->put('/komentar/{id}', function (Request $request, Response $response, arra
     $data = $request->getParsedBody();
     $komen_model = new komentar($db);
     $komen_model->load($id);
-    $body = $user_model->edit_komentar($data['komen'], $data['id_user'], $data['id_movie']);
+    $body = $komen_model->edit_komentar($data['komen'], $data['id_user'], $data['id_movie']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -318,7 +326,7 @@ $app->delete('/komentar/{id}', function (Request $request, Response $response, a
     $data = $request->getParsedBody();
     $komen_model = new komentar($db);
     $komen_model->load($id);
-    $body = $user_model->delete_user();
+    $body = $komen_model->delete_komentar();
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')
@@ -328,18 +336,49 @@ $app->delete('/komentar/{id}', function (Request $request, Response $response, a
     return $newResponse;
 });
 
-$app->get('/komentar/{komen}',function (Request $request, Response $response, array $args){
+/*trailer
+load($id)
+load_all()
+get_data()
+add_trailer($link,$id_movie)
+edit_trailer($link,$id_movie)
+delete_trailer()
+search_trailer_by_movie($id_movie)*/
+
+$app->get('/trailer/search/{id_movie}',function (Request $request, Response $response, array $args){
     global $db;
     $nama = $args['nama'];
-    $artis_model = new komentar($db);
-    $artis_model->search_komentar_by_komen($komen);
-    $body = $artis_model->get_data();
+    $trailer_model = new trailer($db);
+    $trailer_model->search_trailer_by_movie($id_movie);
+    $body = $trailer_model->get_data();
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
-*/
+
+$app->get('/trailer/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $trailer_model = new trailer($db);
+    $trailer_model->load($id);
+    $body = $trailer_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/trailer',function (Request $request, Response $response, array $args){
+    global $db;
+    $trailer_model = new trailer($db);
+    $trailer_model->load_all();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
 
 
 $app->run();

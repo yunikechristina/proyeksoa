@@ -49,3 +49,12 @@ login($email,$password)
 update_user($nama, $email, $password, $subscribe)
 subscribe($subscribe,$id)
 delete_user()
+
+trailer.php
+load($id)
+load_all()
+get_data()
+add_trailer($link,$id_movie)
+edit_trailer($link,$id_movie)
+delete_trailer()
+search_trailer_by_movie($id_movie)
