@@ -4,11 +4,14 @@
     if(isset($_SESSION['email']) && isset($_SESSION['password'])){
       session_unset();
       session_destroy();
-    }else{
-      if(isset($_POST['email']) && isset($_POST['password'])){
-        
-      }
     }
+    if(isset($_POST['email']) && $_POST['password']){
+      $_SESSION['email'] = $_GET['email'];
+      $_SESSION['password'] = $_GET['password'];
+    }
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,6 +39,33 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password">
   </div>
+  <button type="submit" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
+  </form>
+
+  <!-- <?php
+      if(isset($_POST['email']) && isset($_POST['password'])){
+        $url = 'http://localhost:8000/public/user/login';
+        $data = array('email' => $_POST['email'], 'password' => $_POST['password']);
+
+        $options = array(
+          'http' => array(
+            'header' => "Content-type : application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data)
+          )
+        );
+        $context = stream_context_create($options);
+        $result = file_get_contents($url,false, $context);
+
+
+          if ($result['status'] === 1){
+            header("Location : index.php");
+          } else {
+            echo "<p style='color:red;''>password dan username salah</p>";
+          }
+      }
+   ?>-->
+
   <button type="button" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Sign In</button>
   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#register-modal">Sign Up</button>
 </form>
@@ -81,7 +111,7 @@
       function signin(){
         var email = document.getElementById("InputEmail1").value;
         var password = document.getElementById("InputPassword1").value;
-        $.post('http://localhost:8080/public/user/login',{'email' : email, 'password' : password},function(data){
+        $.post('http://localhost:8000/public/user/login',{'email' : email, 'password' : password},function(data){
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
@@ -104,7 +134,7 @@
               window.location.href="sign-in.php";
             }
           });
-      } 
+      }
 
       /*$(document).ready(function(){
         $("#sign-in-submit").click(function(){
