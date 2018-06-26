@@ -3,7 +3,7 @@ $con = mysqli_connect("localhost","root","","proyek_soa");
 
 if (isset($_POST['keterangan'])) {
   $filedata = addslashes(fread(fopen($_FILES['berkas']['tmp_name'], 'r'), $_FILES['berkas']['size']));
-  $allowedExts = array("gif", "jpeg", "jpg", "png", "ppt", "pptx", "docx", "doc");
+  $allowedExts = array("gif", "jpeg", "jpg", "png");
   $temp = explode(".", $_FILES["berkas"]["name"]);
   $extension = end($temp);
 
@@ -42,11 +42,12 @@ if (isset($_POST['keterangan'])) {
      //echo $_POST['idmatkul']."  tre   ";
      //echo $nama_file1;
      
-     $dataa=base64_encode($filedata);
+     $dataa=$filedata;
      
      $result = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."','".$dataa."',".$ukuran.",1)";
-     echo $result;
+     //echo $result;
      $res = mysqli_query($con,$result);
+     echo "test";
        if ($res){
           echo "sukses";
       }else{

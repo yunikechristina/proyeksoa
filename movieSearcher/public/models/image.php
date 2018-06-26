@@ -15,6 +15,9 @@ class image{
 
   public function load($id) {
     $sql = "SELECT * FROM image WHERE id = ".$id;
+    //$result=mysqli_fetch_array($res);
+    //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+
     $res = mysqli_query($this->db->con, $sql);
     $data = mysqli_fetch_assoc($res);
     $this->id = $data['id'];
@@ -45,14 +48,36 @@ class image{
   }
 
   public function add_image($nama_file, $tipe, $dataa, $ukuran, $id_movie){
-    $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".$dataa.",'".$ukuran.",'".$id_movie."')";
-    $res = mysqli_query($this->db->con, $sql);
-    if ($res){
-        return array('status' => 1, 'msg' => 'Success');
-    }else{
-        return array('status' => 0, 'msg' => 'Cannot Add image to Database');
-    }
+    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = pathinfo($uploadedFile->getClientFilename(), PATHINFO_FILENAME);
+   
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+     $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".$dataa.",'".$ukuran.",'".$id_movie."')";
+   
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+     $res = mysqli_query($this->db->con,$sql);
+        if($res){
+            return array('status' => 1,'msg' => 'Success');
+        }else{
+            return array('status' => 0,'msg' => 'Cannot Upload Image to Database');
+        }
+    return $filename;
   }
+
+public function download($id){
+  $res = mysqli_query ($con, "SELECT * FROM image WHERE id=".$id);
+  
+    $response=$res->withHeader('Content-Description', 'File Transfer')
+   ->withHeader('Content-Type', 'application/octet-stream')
+   ->withHeader('Content-Disposition', 'attachment;filename="'.basename($file).'"')
+   ->withHeader('Expires', '0')
+   ->withHeader('Cache-Control', 'must-revalidate')
+   ->withHeader('Pragma', 'public')
+   ->withHeader('Content-Length', filesize($file));
+
+  readfile($file);
+  return $response;
+}
 
 public function edit_image($nama_file, $tipe, $dataa, $ukuran, $id_movie){{
     $sql = "UPDATE image SET nama_file='".$nama_file. "', tipe='".$tipe. "', dataa=".$dataa. ", ukuran=".$ukuran. ", id_movie='".$id_movie. "' WHERE id =".$this->id;
