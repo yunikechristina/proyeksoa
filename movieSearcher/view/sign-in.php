@@ -115,11 +115,7 @@
       function signin(){
         var email = document.getElementById("InputEmail1").value;
         var password = document.getElementById("InputPassword1").value;
-<<<<<<< HEAD
         $.post('http://localhost:8000/public/user/login',{'email' : email, 'password' : password},function(data){
-=======
-        $.post('http://localhost:8080/public/user/login',{'email' : email, 'password' : password},function(data){
->>>>>>> 50439611156da40653b09f267fddaa6f06a83261
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
@@ -128,8 +124,6 @@
             }
           });
       }
-<<<<<<< HEAD
-=======
 
       function signup(){
         var nama = $('#register-user-nama').val();
@@ -144,8 +138,7 @@
               window.location.href="sign-in.php";
             }
           });
-      } 
->>>>>>> 50439611156da40653b09f267fddaa6f06a83261
+      }
 
       /*$(document).ready(function(){
         $("#sign-in-submit").click(function(){
