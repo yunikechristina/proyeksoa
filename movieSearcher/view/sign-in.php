@@ -1,9 +1,12 @@
 <?php
     session_start();
 
-    if(isset($_SESSION['email']) && isset($_SESSION['password'])){
+    if(isset($_SESSION['email'])){
       session_unset();
       session_destroy();
+    }
+    if(isset($_POST['login-email'])){
+        $_SESSION['email'] = $_POST['login-email'];
     }
 
 ?>
@@ -24,11 +27,6 @@
     <div class="jumbotron" style="height: 100%;">
         <h1>Movie Review</h1>
 
-        <?php
-          if(isset($_POST['login-email'])){
-            $_SESSION['email'] = $_POST['login-email'];
-          }
-        ?>
 
   <form action="#" method="POST">
   <div class="form-group">
