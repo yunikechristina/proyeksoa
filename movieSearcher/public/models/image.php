@@ -123,9 +123,9 @@ public function search_image_by_movie($id_movie){
 
 };
 
-require_once '../database.php';
-$db = new Database();
-$movie = new image($db);
+//require_once '../database.php';
+//$db = new Database();
+//$movie = new image($db);
 //print_r($movie->load_all());
 //print_r($movie->load(5));
 //print_r($movie->delete_image());
@@ -137,31 +137,31 @@ $movie = new image($db);
 
 //print_r($movie->edit_image("Thor ganteng", 1, 3));
 
-$app->post('/file/upload', function(Request $request, Response $response) {
-    global $db;
-    $directory = $this->get('upload_directory');
+// $app->post('/file/upload', function(Request $request, Response $response) {
+//     global $db;
+//     $directory = $this->get('upload_directory');
 
-    $id_user = $request->getParsedBody();
-    $id = $id_user['id'];
+//     $id_user = $request->getParsedBody();
+//     $id = $id_user['id'];
      
-    $date = $id_user['date'];
-    $time=$id_user['time'];
-    $uploadedFiles = $request->getUploadedFiles();
-    //$id=$request->getParsedBody();
-    $file_model=new File($db);
-    //$id_user=$id['id'];
+//     $date = $id_user['date'];
+//     $time=$id_user['time'];
+//     $uploadedFiles = $request->getUploadedFiles();
+//     //$id=$request->getParsedBody();
+//     $file_model=new File($db);
+//     //$id_user=$id['id'];
 
-    // handle single input with single file upload
-    $uploadedFile = $uploadedFiles['example1'];
-    foreach ($uploadedFiles['example1'] as $uploadedFile) {
-        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-             $filename =$file_model->moveUploadedFile($id,$directory, $uploadedFile,$date,$time);
-        $response->write('uploaded '   );
-        }
-    }
-});
+//     // handle single input with single file upload
+//     $uploadedFile = $uploadedFiles['example1'];
+//     foreach ($uploadedFiles['example1'] as $uploadedFile) {
+//         if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+//              $filename =$file_model->moveUploadedFile($id,$directory, $uploadedFile,$date,$time);
+//         $response->write('uploaded '   );
+//         }
+//     }
+// });
 ?>
-
+<?php /*
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,3 +180,5 @@ $app->post('/file/upload', function(Request $request, Response $response) {
         </form>
 </body>
 </html>
+
+*/?>

@@ -130,7 +130,7 @@ $app->post('/user/register',function (Request $request, Response $response, arra
 	global $db;
     $data = $request->getParsedBody();
     $user_model = new user($db);
-    $body = $user_model->register($data['nama'], $data['email'],$data['password'], $data['subscribe']);
+    $body = $user_model->register($data['nama'], $data['email'], $data['password'], $data['status'], $data['subscribe']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -445,29 +445,29 @@ $app->get('/image/download/{id}', function(Request $request, Response $res, arra
     return $newResponse;
 });
 
-$app->get('/image/search/{nama_file}',function (Request $request, Response $response, array $args){
-    global $db;
-    $nama_file = $args['nama_file'];
-    $image_model = new image($db);
-    $image_model->search_image_by_nama_file($nama_file);
-    $body = $image_model->get_data();
-    $response->getBody()->write(json_encode($body));
+// $app->get('/image/search/{nama_file}',function (Request $request, Response $response, array $args){
+//     global $db;
+//     $nama_file = $args['nama_file'];
+//     $image_model = new image($db);
+//     $image_model->search_image_by_nama_file($nama_file);
+//     $body = $image_model->get_data();
+//     $response->getBody()->write(json_encode($body));
 
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
+//     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+//     return $newResponse;
+// });
 
-$app->get('/image/search/{id_movie}',function (Request $request, Response $response, array $args){
-    global $db;
-    $id_movie = $args['id_movie'];
-    $image_model = new image($db);
-    $image_model->search_image_by_movie($id_movie);
-    $body = $image_model->get_data();
-    $response->getBody()->write(json_encode($body));
+// $app->get('/image/search/{id_movie}',function (Request $request, Response $response, array $args){
+//     global $db;
+//     $id_movie = $args['id_movie'];
+//     $image_model = new image($db);
+//     $image_model->search_image_by_movie($id_movie);
+//     $body = $image_model->get_data();
+//     $response->getBody()->write(json_encode($body));
 
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
+//     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+//     return $newResponse;
+// });
 
 $app->get('/image/{id}', function (Request $request, Response $response, array $args) {
     global $db;

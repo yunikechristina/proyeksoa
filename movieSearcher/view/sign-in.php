@@ -1,10 +1,10 @@
 <?php
-    session_start();
+    // session_start();
 
-    if(isset($_SESSION['email']) && isset($_SESSION['password'])){
-      session_unset();
-      session_destroy();
-    }
+    // if(isset($_SESSION['email']) && isset($_SESSION['password'])){
+    //   session_unset();
+    //   session_destroy();
+    // }
 
 ?>
 <!DOCTYPE html>
@@ -25,9 +25,9 @@
         <h1>Movie Review</h1>
 
         <?php
-          if(isset($_POST['login-email'])){
-            $_SESSION['email'] = $_POST['login-email'];
-          }
+          // if(isset($_POST['login-email'])){
+          //   $_SESSION['email'] = $_POST['login-email'];
+          // }
         ?>
 
   <form action="#" method="POST">
@@ -85,8 +85,7 @@
       function signin(){
         var email = $('#login-email').val();
         var password = $('#login-password').val();
-        $.post('http://localhost:8000/public/user/login',{'email' : email, 'password' : password},function(data){
-          alert(data['status']);
+        $.post('http://localhost:8080/public/user/login',{'email' : email, 'password' : password},function(data){
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
@@ -101,8 +100,7 @@
         var nama = $('#register-user-nama').val();
         var email = $('#register-user-email').val();
         var password = $('#register-user-password').val();
-        $.post('http://localhost:8000/public/user/register',{'nama' : nama, 'email' : email, 'password' : password, 'status' : 'user', 'subscribe' : 'false'},function(data){
-          alert(data);
+        $.post('http://localhost:8080/public/user/register',{'nama' : nama, 'email' : email, 'password' : password, 'status' : 'user', 'subscribe' : 'false'},function(data){
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
@@ -111,24 +109,6 @@
             }
           });
       }
-
-      /*$(document).ready(function(){
-        $("#sign-in-submit").click(function(){
-          var email = ("#InputEmail1").val();
-          alert(email);
-          var password = ("#InputPassword1").val();
-          alert(password);
-          $.post('http://localhost:8008/public/user/login',{'email' = email, 'password' = password},function(data){
-            if(data['status'] == 0){
-              alert(data['msg']);
-            }else{
-              alert(data['msg']);
-              href.location="index.php";
-            }
-          });
-        });
-      });*/
-
     </script>
 </body>
 </html>

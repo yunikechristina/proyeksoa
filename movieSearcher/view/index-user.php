@@ -45,8 +45,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
 							<li class="active"><a href="index.html">Home</a></li>
-							<li><a href="#">tv - series</a></li>
-							<li><a href="#">news</a></li>
 							<li><a href="#">A - z list</a></li>
 							<li><a href="#">Contact</a></li>
 						</ul>
@@ -66,9 +64,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</form>
 									</div>
 								</div>
-	
 			</div> 
-
 			   </div>
 		<!--//header-w3l-->
 			<!--/banner-info-->
@@ -177,20 +173,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 										<h4>Register</h4>
 										<div class="login-form">
-											<form action="#" method="post">
-											    <input type="text" name="name" placeholder="Name" required="">
-												<input type="email" name="email" placeholder="E-mail" required="">
-												<input type="password" name="password" placeholder="Password" required="">
-												<input type="password" name="conform password" placeholder="Confirm Password" required="">
-												<div class="signin-rit">
-													<span class="agree-checkbox">
-														<label class="checkbox"><input type="checkbox" name="checkbox">I agree to your <a class="w3layouts-t" href="#" target="_blank">Terms of Use</a> and <a class="w3layouts-t" href="#" target="_blank">Privacy Policy</a></label>
-													</span>
-												</div>
+											    <input type="text" name="name" id="register-user-nama" placeholder="Name" required="">
+												<input type="email" name="email"
+												id="register-user-email" placeholder="E-mail" required="">
+												<input type="password" id="register-user-password" name="password" placeholder="Password" required="">
 												<div class="tp">
-													<input type="submit" value="REGISTER NOW">
+													<input type="submit" onclick="signup()" value="REGISTER NOW">
 												</div>
-											</form>
 										</div>
 									</div>
 								</div>
@@ -392,7 +381,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												</div>
 											</div>
 												<div class="w3l-movie-gride-agile">
-												<a href="single.html" class="hvr-sweep-to-bottom"><img src="images/m8.jpg" title="Movies Pro" class="img-responsive" alt=" ">
+												<a href="single.html" class="hvr-sweep-to-bottom"><img src="user/images/m8.jpg" title="Movies Pro" class="img-responsive" alt=" ">
 													<div class="w3l-action-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></div>
 												</a>
 												<div class="mid-1 agileits_w3layouts_mid_1_home">
@@ -447,19 +436,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<input type="submit" value="Subscribe">
 					</form>
 				</div>
-					<div class="footer-grids w3-agileits">
-						<div class="col-md-2 footer-grid">
-						<h4>Release</h4>
-							<ul> 
-								<li><a href="#" title="Release 2016">2016</a></li> 
-								<li><a href="#" title="Release 2015">2015</a></li>
-								<li><a href="#" title="Release 2014">2014</a></li> 
-								<li><a href="#" title="Release 2013">2013</a></li> 
-								<li><a href="#" title="Release 2012">2012</a></li>
-								<li><a href="#" title="Release 2011">2011</a></li> 
-							</ul>
-						</div>
-					</div>
 						<div class="clearfix"> </div>
 					</div>
 					<h3 class="text-center follow">Connect <span>Us</span></h3>
@@ -552,25 +528,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="user/js/easy-responsive-tabs.js"></script>
 <script>
 $(document).ready(function () {
-$('#horizontalTab').easyResponsiveTabs({
-type: 'default', //Types: default, vertical, accordion           
-width: 'auto', //auto or any width like 600px
-fit: true,   // 100% fit in a container
-closed: 'accordion', // Start closed if in accordion view
-activate: function(event) { // Callback function if tab is switched
-var $tab = $(this);
-var $info = $('#tabInfo');
-var $name = $('span', $info);
-$name.text($tab.text());
-$info.show();
+	$('#horizontalTab').easyResponsiveTabs({
+		type: 'default', //Types: default, vertical, accordion           
+		width: 'auto', //auto or any width like 600px
+		it: true,   // 100% fit in a container
+		closed: 'accordion', // Start closed if in accordion view
+		activate: function(event) { // Callback function if tab is switched
+			var $tab = $(this);
+			var $info = $('#tabInfo');
+			var $name = $('span', $info);
+			$name.text($tab.text());
+			$info.show();
+		}
+	});
+	$('#verticalTab').easyResponsiveTabs({
+		type: 'vertical',
+		width: 'auto',
+		fit: true
+	});
+});
+function signup(){
+    var nama = $('#register-user-nama').val();
+    var email = $('#register-user-email').val();
+    var password = $('#register-user-password').val();
+    $.post('http://localhost:8080/public/user/register',{'nama' : nama, 'email' : email, 'password' : password, 'status' : 'user', 'subscribe' : 'false'},function(data){
+    	if(data['status'] == 0){
+        	alert(data['msg']);
+    	}else{
+    		alert(data['msg']);
+        	$("#myModal5").modal('hide');
+    	}
+    });
 }
-});
-$('#verticalTab').easyResponsiveTabs({
-type: 'vertical',
-width: 'auto',
-fit: true
-});
-});
 </script>
 <link href="user/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
 <script src="user/js/owl.carousel.js"></script>
