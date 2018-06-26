@@ -42,7 +42,7 @@
   <button type="submit" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
   </form>
 
-  <?php
+  <!-- <?php
       if(isset($_POST['email']) && isset($_POST['password'])){
         $url = 'http://localhost:8000/public/user/login';
         $data = array('email' => $_POST['email'], 'password' => $_POST['password']);
@@ -78,7 +78,7 @@
         alert('Coba');
         var email = document.getElementById("InputEmail1").value;
         var password = document.getElementById("InputPassword1").value;
-        $.post('http://localhost:8008/public/user/login',{'email' : email, 'password' : password},function(data){
+        $.post('http://localhost:8000/public/user/login',{'email' : email, 'password' : password},function(data){
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
