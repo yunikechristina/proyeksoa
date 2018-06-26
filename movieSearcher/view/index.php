@@ -1,3 +1,7 @@
+<?php
+		session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +43,7 @@
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li>
                     <li>
-                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b></a>
+                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $_SESSION['email']; ?></b></a>
                     </li>
                 </ul>
             </div>
@@ -82,6 +86,7 @@
             </nav>
         </div>
         <div class="row">
+					<?php print_r($_SESSION); ?>
             <div class="col-sm-12">
                 <table class="table table-hover" id>
                     <thead>
@@ -93,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody id="movie-table">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -118,7 +123,7 @@
 
         $(document).ready(function(){
             load_data();
-        }
+        });
     </script>
 
 

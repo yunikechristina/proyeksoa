@@ -64,7 +64,7 @@ class user{
     if(md5($password)==$row['password']){
       return array('status' => 1, 'msg' => 'Success');
     }else{
-      return array('status' => 2, 'msg' => 'Email or password failed');
+      return array('status' => 0, 'msg' => 'Email or password failed');
     }
   }
 

@@ -5,12 +5,6 @@
       session_unset();
       session_destroy();
     }
-    if(isset($_POST['email']) && $_POST['password']){
-      $_SESSION['email'] = $_GET['email'];
-      $_SESSION['password'] = $_GET['password'];
-    }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -29,43 +23,23 @@
 <div class="container" style="height: 100%;width: 40%; margin-top: 50px;">
     <div class="jumbotron" style="height: 100%;">
         <h1>Movie Review</h1>
-  <form method="POST">
+
+        <?php
+          if(isset($_POST['login-email'])){
+            $_SESSION['email'] = $_POST['login-email'];
+          }
+        ?>
+
+  <form action="#" method="POST">
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" name="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <input type="email" name="email" class="form-control" id="login-email" name="login-email" aria-describedby="emailHelp" placeholder="Enter email">
     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password">
+    <input type="password" name="password" class="form-control" id="login-password" name="login-password" placeholder="Password">
   </div>
-  <button type="submit" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
-  </form>
-
-  <!-- <?php
-      if(isset($_POST['email']) && isset($_POST['password'])){
-        $url = 'http://localhost:8000/public/user/login';
-        $data = array('email' => $_POST['email'], 'password' => $_POST['password']);
-
-        $options = array(
-          'http' => array(
-            'header' => "Content-type : application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
-            'content' => http_build_query($data)
-          )
-        );
-        $context = stream_context_create($options);
-        $result = file_get_contents($url,false, $context);
-
-
-          if ($result['status'] === 1){
-            header("Location : index.php");
-          } else {
-            echo "<p style='color:red;''>password dan username salah</p>";
-          }
-      }
-   ?>-->
-
   <button type="button" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Sign In</button>
   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#register-modal">Sign Up</button>
 </form>
@@ -109,9 +83,10 @@
 
     <script type="text/javascript">
       function signin(){
-        var email = document.getElementById("InputEmail1").value;
-        var password = document.getElementById("InputPassword1").value;
+        var email = $('#login-email').val();
+        var password = $('#login-password').val();
         $.post('http://localhost:8000/public/user/login',{'email' : email, 'password' : password},function(data){
+          alert(data['status']);
             if(data['status'] == 0){
               alert(data['msg']);
             }else{
@@ -119,13 +94,14 @@
               window.location.href="index.php";
             }
           });
+
       }
 
       function signup(){
         var nama = $('#register-user-nama').val();
         var email = $('#register-user-email').val();
         var password = $('#register-user-password').val();
-        $.post('http://localhost:8080/public/user/register',{'nama' : nama, 'email' : email, 'password' : password, 'status' : 'user', 'subscribe' : 'false'},function(data){
+        $.post('http://localhost:8000/public/user/register',{'nama' : nama, 'email' : email, 'password' : password, 'status' : 'user', 'subscribe' : 'false'},function(data){
           alert(data);
             if(data['status'] == 0){
               alert(data['msg']);
