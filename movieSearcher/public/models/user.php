@@ -117,7 +117,7 @@ class user{
 //$db = new Database();
 //$movie = new user($db);
 //register($nama, $email, $password, $status, $subscribe)
-//print_r(json_encode($movie->register("satria", "satria@gmail.com", "satria", "user", "false")));
+//print_r(json_encode($movie->register("budi", "budi@gmail.com", "budi", "user", "false")));
 
 //login($email,$password)
 //print_r(json_encode($movie->login("satria@gmail.com", "satria")));
