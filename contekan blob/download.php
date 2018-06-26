@@ -24,6 +24,6 @@ header("Content-Transfer-Encoding: binarynn");
 header("Pragma: no-cache");
 header("Expires: 0");
 header('Content-Disposition: attachment; filename="' . $filename . '"');
-echo $filedata;
+echo base64_encode($filedata);
 exit();
 ?>

@@ -14,13 +14,16 @@ class image{
   }
 
   public function load($id) {
-    $sql = "SELECT * FROM image WHERE id = ".$id;
+    $sql = "SELECT * FROM image WHERE id =".$id;
+    //$result=mysqli_fetch_array($res);
+    //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+
     $res = mysqli_query($this->db->con, $sql);
     $data = mysqli_fetch_assoc($res);
     $this->id = $data['id'];
     $this->nama_file = $data['nama_file'];
     $this->tipe = $data['tipe'];
-    $this->dataa = $data['dataa'];
+    $this->dataa = $data['data'];
     $this->id_movie = $data['id_movie'];
   }
 
@@ -45,15 +48,38 @@ class image{
   }
 
   public function add_image($nama_file, $tipe, $dataa, $ukuran, $id_movie){
-    $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".$dataa.",'".$ukuran.",'".$id_movie."')";
-    $res = mysqli_query($this->db->con, $sql);
-    if ($res){
-        return array('status' => 1, 'msg' => 'Success');
-    }else{
-        return array('status' => 0, 'msg' => 'Cannot Add image to Database');
-    }
+    $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = pathinfo($uploadedFile->getClientFilename(), PATHINFO_FILENAME);
+   
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+     $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".$dataa.",'".$ukuran.",'".$id_movie."')";
+   
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+     $res = mysqli_query($this->db->con,$sql);
+        if($res){
+            return array('status' => 1,'msg' => 'Success');
+        }else{
+            return array('status' => 0,'msg' => 'Cannot Upload Image to Database');
+        }
+    return $filename;
   }
 
+public function download($id){
+  $res = mysqli_query ($con, "SELECT * FROM image WHERE id=".$id);
+
+    $response=$res->withHeader('Content-Description', 'File Transfer')
+   ->withHeader('Content-Type', 'application/octet-stream')
+   ->withHeader('Content-Disposition', 'attachment;filename="'.basename($file).'"')
+   ->withHeader('Expires', '0')
+   ->withHeader('Cache-Control', 'must-revalidate')
+   ->withHeader('Pragma', 'public')
+   ->withHeader('Content-Length', filesize($file));
+
+  readfile($file);
+  return $response;
+}
+
+//TIDAK DIPAKAI
 public function edit_image($nama_file, $tipe, $dataa, $ukuran, $id_movie){{
     $sql = "UPDATE image SET nama_file='".$nama_file. "', tipe='".$tipe. "', dataa=".$dataa. ", ukuran=".$ukuran. ", id_movie='".$id_movie. "' WHERE id =".$this->id;
     $res = mysqli_query($this->db->con, $sql);
@@ -97,28 +123,60 @@ public function search_image_by_movie($id_movie){
 
 };
 
-//require_once '../database.php';
-//$db = new Database();
-//$movie = new image($db);
-//print_r($movie->search_image_by_nama_file('je'));
-//print_r($movie->search_image_by_user(3));
-//print_r($movie->search_image_by_movie(2));
+require_once '../database.php';
+$db = new Database();
+$movie = new image($db);
 //print_r($movie->load_all());
+//print_r($movie->load(5));
+//print_r($movie->delete_image());
+//print_r($movie->get_data());
+//print_r($movie->search_image_by_nama_file('hehe'));
+//print_r($movie->search_image_by_movie(1));
+
 //print_r($movie->add_image("gils keren bezz",2,3));
 
-//print_r($movie->load(4));
-//print_r($movie->get_data());
 //print_r($movie->edit_image("Thor ganteng", 1, 3));
-//print_r($movie->delete_image());
+
+$app->post('/file/upload', function(Request $request, Response $response) {
+    global $db;
+    $directory = $this->get('upload_directory');
+
+    $id_user = $request->getParsedBody();
+    $id = $id_user['id'];
+     
+    $date = $id_user['date'];
+    $time=$id_user['time'];
+    $uploadedFiles = $request->getUploadedFiles();
+    //$id=$request->getParsedBody();
+    $file_model=new File($db);
+    //$id_user=$id['id'];
+
+    // handle single input with single file upload
+    $uploadedFile = $uploadedFiles['example1'];
+    foreach ($uploadedFiles['example1'] as $uploadedFile) {
+        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+             $filename =$file_model->moveUploadedFile($id,$directory, $uploadedFile,$date,$time);
+        $response->write('uploaded '   );
+        }
+    }
+});
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <title></title>
 </head>
 <body>
-   <input type="file" name="pic" accept=".gif,.jpeg,.png,.jpg">
-      <a href="assignment.php">
-      <button>Submit belum ajax</button>
+  <form method="POST" action="http://localhost:8000/public/file/upload" enctype="multipart/form-data">
+            <label>Select file to upload:</label>
+            <input type="file" name="example1[]" multiple="multiple">
+            <button class="btn btn-default">Submit</button>
+            <input type="hidden" id="name" name="name" value="<?=$_SESSION['username']?>">
+             <input type="hidden" id="id" name="id" value="<?=$_SESSION['id']?>">
+             <input type="hidden" id="date" name="date" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("Y-m-d") ?>"    >
+             <input type="hidden" id="time" name="time" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("H:i:s") ?>"    >
+
+        </form>
 </body>
 </html>
