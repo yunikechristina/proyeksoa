@@ -39,7 +39,6 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password">
   </div>
-<<<<<<< HEAD
   <button type="submit" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
   </form>
 
@@ -67,12 +66,9 @@
       }
    ?>-->
 
-
-=======
   <button type="button" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Sign In</button>
   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#register-modal">Sign Up</button>
 </form>
->>>>>>> 50439611156da40653b09f267fddaa6f06a83261
     </div>
 </div>
 

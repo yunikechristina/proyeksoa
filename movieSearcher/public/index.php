@@ -129,7 +129,7 @@ $app->post('/user/register',function (Request $request, Response $response, arra
 	global $db;
     $data = $request->getParsedBody();
     $user_model = new user($db);
-    $body = $user_model->register($data['nama'], $data['email'], $data['password'], $data['status'], $data['subscribe']);
+    $body = $user_model->register($data['nama'], $data['email'],$data['password'], $data['subscribe']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
