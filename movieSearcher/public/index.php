@@ -10,6 +10,7 @@ require 'models/user.php';
 require 'models/movie.php';
 require 'models/komentar.php';
 require 'models/trailer.php';
+require 'models/image.php';
 
 $db = new Database();
 $app = new \Slim\App;
@@ -262,9 +263,9 @@ $app->delete('/movie/{id}', function (Request $request, Response $response, arra
 /* KOMENTAR
 search_komentar_by_movie($id_movie)
 */
-$app->get('/komentar/search/{komen}',function (Request $request, Response $response, array $args){
+$app->get('/komentar/search/{id_movie}',function (Request $request, Response $response, array $args){
     global $db;
-    $nama = $args['nama'];
+    $id_movie = $args['id_movie'];
     $komen_model = new komentar($db);
     $komen_model->search_komentar_by_movie($id_movie);
     $body = $komen_model->get_data();
@@ -419,7 +420,118 @@ $app->delete('/trailer/{id}', function (Request $request, Response $response, ar
     return $newResponse;
 });
 
+/*
+IMAGE
+load($id) v
+load_all() v
+get_data()
+add_image($nama_file, $tipe, $dataa, $ukuran, $id_movie) v
+download($id) v
+edit_image($nama_file, $tipe, $dataa, $ukuran, $id_movie) v
+delete_image() v
+search_image_by_nama_file($nama_file) v
+search_image_by_movie($id_movie) v
+*/
 
+$app->get('/image/download/{id}', function(Request $request, Response $res, array $args) { 
+    global $db;
+    $id = $args['id'];
+    $image_model = new image($db);
+    $image_model->download($id);
+    $body = $image_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/image/search/{nama_file}',function (Request $request, Response $response, array $args){
+    global $db;
+    $nama_file = $args['nama_file'];
+    $image_model = new image($db);
+    $image_model->search_image_by_nama_file($nama_file);
+    $body = $image_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/image/search/{id_movie}',function (Request $request, Response $response, array $args){
+    global $db;
+    $id_movie = $args['id_movie'];
+    $image_model = new image($db);
+    $image_model->search_image_by_movie($id_movie);
+    $body = $image_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/image/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $image_model = new image($db);
+    $image_model->load($id);
+    $body = $image_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/image',function (Request $request, Response $response, array $args){
+    global $db;
+    $image_model = new image($db);
+    $image_model->load_all();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->post('/image',function (Request $request, Response $response, array $args){
+    global $db;
+    $data = $request->getParsedBody();
+    $image_model = new image($db);
+    //($nama_file, $tipe, $dataa, $ukuran, $id_movie)
+    $body = $image_model->add_image($data['nama_file'], $data['tipe'], $data['dataa'], $data['ukuran'], $data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+//tidak dipakai
+$app->put('/image/{id}', function (Request $request, Response $response, array $args){
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $image_model = new image($db);
+    $image_model->load($id);
+    $body = $image_model->edit_image($data['nama_file'], $data['tipe'], $data['dataa'], $data['ukuran'], $data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->delete('/image/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $image_model = new image($db);
+    $image_model->load($id);
+    $body = $image_model->delete_image();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')
+                            ->withHeader('Access-Control-Allow-Origin', '*')
+                            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    return $newResponse;
+});
 
 $app->run();
 
