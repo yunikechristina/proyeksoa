@@ -4,7 +4,7 @@ class trailer{
 	public $db;
 	public $id;
 	public $link;
-	public $id_movie
+	public $id_movie;
 
 	public function __construct($db){
     	$this->db = $db;
@@ -78,5 +78,4 @@ class trailer{
   	}
 };
 
-};
 ?>
