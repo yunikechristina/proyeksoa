@@ -4,11 +4,14 @@
     if(isset($_SESSION['email']) && isset($_SESSION['password'])){
       session_unset();
       session_destroy();
-    }else{
-      if(isset($_POST['email']) && isset($_POST['password'])){
-        
-      }
     }
+    if(isset($_POST['email']) && $_POST['password']){
+      $_SESSION['email'] = $_GET['email'];
+      $_SESSION['password'] = $_GET['password'];
+    }
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,8 +39,34 @@
     <label for="exampleInputPassword1">Password</label>
     <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password">
   </div>
-  <button type="button" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
-</form>
+  <button type="submit" class="btn btn-primary" id="sign-in-submit" onclick="signin()">Submit</button>
+  </form>
+
+  <?php
+      if(isset($_POST['email']) && isset($_POST['password'])){
+        $url = 'http://localhost:8000/public/user/login';
+        $data = array('email' => $_POST['email'], 'password' => $_POST['password']);
+
+        $options = array(
+          'http' => array(
+            'header' => "Content-type : application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data)
+          )
+        );
+        $context = stream_context_create($options);
+        $result = file_get_contents($url,false, $context);
+
+
+          if ($result['status'] === 1){
+            header("Location : index.php");
+          } else {
+            echo "<p style='color:red;''>password dan username salah</p>";
+          }
+      }
+   ?>-->
+
+
     </div>
 </div>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -57,7 +86,7 @@
               window.location.href="index.php";
             }
           });
-      } 
+      }
 
       /*$(document).ready(function(){
         $("#sign-in-submit").click(function(){
