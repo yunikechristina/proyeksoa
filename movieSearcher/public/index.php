@@ -295,8 +295,9 @@ $app->post('/movie',function (Request $request, Response $response, array $args)
     global $db;
     $data = $request->getParsedBody();
     $movie_model = new movie($db);
-    $movie_model->load($id);
-    $body = $movie_model->add_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['img'],$data['trailer'],$data['genre']);
+    //$movie_model->load($id);
+    //$data['img'],$data['trailer'], PERIKSA ULANG DB
+    $body = $movie_model->add_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['genre']);
     $response->getBody()->write(json_encode($body));
 
      $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');

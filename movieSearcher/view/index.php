@@ -585,10 +585,10 @@ function signup(){
 	 
 	}); 
 </script> 
-
 <!--/script-->
 <script type="text/javascript" src="user/js/move-top.js"></script>
 <script type="text/javascript" src="user/js/easing.js"></script>
+
 
 <script type="text/javascript">
 			jQuery(document).ready(function($) {
@@ -615,8 +615,7 @@ function signup(){
 					</script>
 <!--end-smooth-scrolling-->
 	<script src="user/js/bootstrap.js"></script>
-
- 
-
+       
+    </script>
 </body>
 </html>
