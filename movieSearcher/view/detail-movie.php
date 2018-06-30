@@ -122,7 +122,7 @@
             <div class="row row bg-title">
                 <div class="col">
                     <h1 style="display: inline-block;">Trailer List</h1>
-                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-movie-modal">Add Trailer</button>
+                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-trailer-modal">Add Trailer</button>
                 </div>
             </div>
         <div class="row">
@@ -131,13 +131,10 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th width="20%">Movie Title</th>
-                            <th width="10%">Year</th>
-                            <th width="20%">Genre</th>
-                            <th width="20%">Action</th>
+                            <th width="20%">Trailer</th>
                         </tr>
                     </thead>
-                    <tbody id="movie-table">
+                    <tbody id="trailer-table">
 
                     </tbody>
                 </table>
@@ -157,13 +154,11 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th width="20%">Movie Title</th>
-                            <th width="10%">Year</th>
-                            <th width="20%">Genre</th>
-                            <th width="20%">Action</th>
+                            <th width="20%">Image Title</th>
+                            <th width="10%">Image</th>
                         </tr>
                     </thead>
-                    <tbody id="movie-table">
+                    <tbody id="image-table">
 
                     </tbody>
                 </table>
@@ -193,7 +188,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="trailer-link">Link: </label>
-                    <input type="text" id="trailer-link" class="form-control" placeholder="Movie Title">
+                    <input type="text" id="trailer-link" class="form-control" placeholder="Link">
                 </div>
                 <div class="form-group">
                     <label for="movie-sinopsis">Id Movie: </label>
@@ -201,7 +196,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add-movie-submit">Add</button>
+                <button type="button" class="btn btn-primary" id="add-trailer-submit">Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             </div>
@@ -252,12 +247,12 @@
     
     <script type="text/javascript">
         function load_data(){
-            $("#movie-table").html('');
-            $.get('http://localhost:8008/public/movie',{}, function(data){
+            $("#trailer-table").html('');
+            $.get('http://localhost:8008/public/trailer',{}, function(data){
                 $.each(data, function(index,value){
                     // <td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
-                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
-                    $('#movie-table').append(line);
+                    var line = '<tr><td>' + (index + 1) + '</td><td><iframe width="420" height="315" src="'+value['link']+'"></iframe></td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_trailer(' + value['id'] + ')">Detail</button><button class="btn btn-danger" onclick="delete_trailer(' + value['id'] + ')">Delete</button></td></tr>';
+                    $('#trailer-table').append(line);
                 });
             });
         }
@@ -292,7 +287,7 @@
         }
 
         //PORT VIEW
-        function delete_movie(id){
+        function delete_trailer(id){
             $.delete('http://localhost:8008/public/movie/' + id, {"_METHOD": "DELETE"}, function(data){
                 if(data['status'] == 0){
                     alert(data['msg']);
@@ -322,55 +317,28 @@
                 }
             });
         }
-
-         function search_movie(name){
-            $("#movie-table").html('');
-            $.get('http://localhost:8800/public/movie/search/'+name, {}, function(data){
-                $.each(data, function(index, value){
-                    //<td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
-                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button></td><td><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
-                    $("#movie-table").append(line);
-                });
-            });
-        }
-
         $(document).ready(function(){
+            load_data();
             var queryString = decodeURIComponent(window.location.search);
             queryString = queryString.substring(1);
             var queries = queryString.split("&");
             $("#movie-title").val(queries[1].split("=").pop());
             $("#movie-year").val(queries[2].split("=").pop());
             $("#movie-sinopsis").val(queries[4].split("=").pop());
+            $("#movie-id").val(queries[0].split("=").pop());
 
-            if ($("#search-movie-keyword").val() == "") {load_data();}
-   
-
-            $("#add-movie-submit").click(function(){
-                var title = $("#movie-title").val();
-                var sinopsis = $("#movie-sinopsis").val();
-                var genre = $("#movie-genre").val();
-                var year = $("#movie-year").val();
-                //'img': 'dummyimg', 'trailer': 'dummy',
-                $.post('http://localhost:8008/public/movie', {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genre}, function(data){
+            $("#add-trailer-submit").click(function(){
+                var link = $("#trailer-link").val();
+                var movie_id = $("#movie-id").val();
+                $.post('http://localhost:8008/public/trailer', {'link': link, 'id_movie': movie_id}, function(data){
                     if(data['status'] == 0){
                         alert(data['msg']);
                     }else{
                         load_data();
-                        $("#movie-title").val('');
-                        $("#movie-sinopsis").val('');
-                        $("#movie-genre").val('');
-                        $("#movie-year").val('');
+                        $("#trailer-link").val('');
                         $("#add-movie-modal").modal('hide');
                     }
                 });
-            });
-
-            $("#search-movie-submit").click(function(){
-                if ($("#search-movie-keyword").val() == "") {load_data();}
-                else {
-                    var name = $("#search-movie-keyword").val();
-                    search_movie(name);
-                }
             });
         });
     </script>

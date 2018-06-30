@@ -390,7 +390,7 @@ $app->post('/trailer',function (Request $request, Response $response, array $arg
     global $db;
     $data = $request->getParsedBody();
     $trailer_model = new trailer($db);
-    $body = $komen_model->add_trailer($data['link'],$data['id_movie']);
+    $body = $trailer_model->add_trailer($data['link'],$data['id_movie']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -403,7 +403,7 @@ $app->put('/trailer/{id}', function (Request $request, Response $response, array
     $data = $request->getParsedBody();
     $trailer_model = new trailer($db);
     $trailer_model->load($id);
-    $body = $komen_model->edit_trailer($data['link'],$data['id_movie']);
+    $body = $trailer_model->edit_trailer($data['link'],$data['id_movie']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
