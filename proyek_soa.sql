@@ -1,8 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+
 -- Generation Time: Jun 30, 2018 at 04:42 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
@@ -25,7 +26,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artis`
+-- Struktur dari tabel `artis`
 --
 
 CREATE TABLE `artis` (
@@ -34,7 +35,7 @@ CREATE TABLE `artis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `artis`
+-- Dumping data untuk tabel `artis`
 --
 
 INSERT INTO `artis` (`id`, `nama`) VALUES
@@ -46,7 +47,7 @@ INSERT INTO `artis` (`id`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_artis`
+-- Struktur dari tabel `detail_artis`
 --
 
 CREATE TABLE `detail_artis` (
@@ -57,7 +58,7 @@ CREATE TABLE `detail_artis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `detail_artis`
+-- Dumping data untuk tabel `detail_artis`
 --
 
 INSERT INTO `detail_artis` (`id`, `peran`, `id_artis`, `id_movie`) VALUES
@@ -68,7 +69,7 @@ INSERT INTO `detail_artis` (`id`, `peran`, `id_artis`, `id_movie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `image`
+-- Struktur dari tabel `image`
 --
 
 CREATE TABLE `image` (
@@ -81,7 +82,7 @@ CREATE TABLE `image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `image`
+-- Dumping data untuk tabel `image`
 --
 
 INSERT INTO `image` (`id`, `nama_file`, `tipe`, `data`, `ukuran`, `id_movie`) VALUES
@@ -94,7 +95,7 @@ INSERT INTO `image` (`id`, `nama_file`, `tipe`, `data`, `ukuran`, `id_movie`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `komentar`
+-- Struktur dari tabel `komentar`
 --
 
 CREATE TABLE `komentar` (
@@ -105,7 +106,7 @@ CREATE TABLE `komentar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `komentar`
+-- Dumping data untuk tabel `komentar`
 --
 
 INSERT INTO `komentar` (`id`, `komen`, `id_user`, `id_movie`) VALUES
@@ -117,7 +118,7 @@ INSERT INTO `komentar` (`id`, `komen`, `id_user`, `id_movie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movie`
+-- Struktur dari tabel `movie`
 --
 
 CREATE TABLE `movie` (
@@ -129,7 +130,7 @@ CREATE TABLE `movie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `movie`
+-- Dumping data untuk tabel `movie`
 --
 
 INSERT INTO `movie` (`id`, `judul`, `tahun`, `sinopsis`, `genre`) VALUES
@@ -140,7 +141,7 @@ INSERT INTO `movie` (`id`, `judul`, `tahun`, `sinopsis`, `genre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -153,7 +154,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `nama`, `email`, `password`, `status`, `subscribe`) VALUES
@@ -161,7 +162,10 @@ INSERT INTO `user` (`id`, `nama`, `email`, `password`, `status`, `subscribe`) VA
 (2, 'yunike', 'yunike@gmail.com', '1291ef032389ef8cbf122d150bc0ad16', 'user', 'true'),
 (3, 'claudia', 'claudia@gmail.com', '2b9ff3efc4a999ecfacd18c4bbc57a2e', 'user', 'false'),
 (4, 'amanda', 'amanda@gmail.com', '6209804952225ab3d14348307b5a4a27', 'user', 'true'),
-(5, 'satria', 'satria@gmail.com', '477054c78baea7a1242f79d898a2ca46', 'user', 'false');
+(5, 'satria', 'satria@gmail.com', '477054c78baea7a1242f79d898a2ca46', 'user', 'false'),
+(7, 'budi', 'budi@gmail.com', '00dfc53ee86af02e742515cdcf075ed3', 'user', 'false'),
+(9, 'ani', 'ani@gmail.com', '29d1e2357d7c14db51e885053a58ec67', 'user', 'false'),
+(10, 'bobo', 'bobo@gmail.com', 'ca2cd2bcc63c4d7c8725577442073dde', 'user', 'false');
 
 --
 -- Indexes for dumped tables
@@ -241,7 +245,7 @@ ALTER TABLE `movie`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
