@@ -294,15 +294,11 @@
         }
 
         $(document).ready(function(){
-<<<<<<< HEAD
+
             if ($("#search-movie-keyword").val() == "") {load_data();}
    
 
             $("#add-movie-submit").click(function(){
-=======
-            load_data();
-               $("#add-movie-submit").click(function(){
->>>>>>> d37a5cad40170a709cef91c0bbd21b831ad37911
                 var title = $("#movie-title").val();
                 var sinopsis = $("#movie-sinopsis").val();
                 var genre = $("#movie-genre").val();
