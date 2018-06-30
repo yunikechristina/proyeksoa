@@ -68,7 +68,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			   </div>
 		<!--//header-w3l-->
 			<!--/banner-info-->
-			   <div class="baner-info">
+			   <div class="banner-info">
 			      <h3><span>Mo</span>vies <span>Re</span>Viewer </h3>
 				  <h4>In space no one can hear you scream.</h4>
 			   </div>
@@ -190,6 +190,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<!-- //Modal1 -->
 				*/ ?>
 	<!--/footer-bottom-->
+	<div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover" id="movie-show-table">
+                </table>
+            </div>
+        </div>
+
 		<div class="contact-w3ls" id="contact">
 			<div class="footer-w3lagile-inner">
 				<h2>Sign up for our <span>Newsletter</span></h2>
@@ -222,7 +229,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="user/js/jquery-1.11.1.min.js"></script>
 	<!-- Dropdown-Menu-JavaScript -->
 			<script>
+
+				// function load_movie_show_table(){
+		  //           $("#movie-show-table").html('');
+				// 	$.get(
+				// 	    'http://localhost:8008/public/image',
+				// 	    function(data){                     
+				// 	       $.each(data, function(index,value){
+		  //               	alert(value['nama_file']);
+		  //               	//echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+		  //                   var line = '<tr><td><img src=data:' + value['tipe'] + ';base64,' + base64_encode($value['data']) + '/></td></tr>';
+		  //                   $('#movie-show-table').append(line);
+		  //               });
+				// 	    },
+				// 	    'json'
+				// 	);
+		  //       }
+
+		         function load_movie_show_table(){
+		            $("#movie-show-table").html('');
+		            $.get('http://localhost:8008/public/image', {}, function(data){
+		                $.each(data, function(index, value){
+		                	//echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+		                	//alert(value['nama_file']);
+		                    //var line = '<tr><td><img src=data:' + value['tipe'] + ';base64,' + base64_encode($value['data']) + '/></td></tr>';
+		                    $('#movie-show-table').append(line);
+		                });
+		            });
+		        }
+
 				$(document).ready(function(){
+					load_movie_show_table();
+
 					$(".dropdown").hover(            
 						function() {
 							$('.dropdown-menu', this).stop( true, true ).slideDown("fast");

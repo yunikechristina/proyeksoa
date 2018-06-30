@@ -310,9 +310,10 @@ $app->put('/movie/{id}', function (Request $request, Response $response, array $
     $data = $request->getParsedBody();
     $movie_model = new movie($db);
     $movie_model->load($id);
-    $body = $movie_model->update_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['img'],$data['trailer'],$data['genre']);
+    //$data['img'],$data['trailer']
+    $body = $movie_model->update_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['genre']);
     $response->getBody()->write(json_encode($body));
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS')->withHeader('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');;
     return $newResponse;
 });
 
@@ -322,7 +323,7 @@ $app->delete('/movie/{id}', function (Request $request, Response $response, arra
     $data = $request->getParsedBody();
     $movie_model = new movie($db);
     $movie_model->load($id);
-    $body = $movie_model->delete_user();
+    $body = $movie_model->delete_movie();
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')
@@ -446,7 +447,7 @@ $app->get('/trailer/{id}', function (Request $request, Response $response, array
 $app->get('/trailer',function (Request $request, Response $response, array $args){
     global $db;
     $trailer_model = new trailer($db);
-    $trailer_model->load_all();
+    $body = $trailer_model->load_all();
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -557,9 +558,8 @@ $app->get('/image/{id}', function (Request $request, Response $response, array $
 $app->get('/image',function (Request $request, Response $response, array $args){
     global $db;
     $image_model = new image($db);
-    $image_model->load_all();
+    $body = $image_model->load_all();
     $response->getBody()->write(json_encode($body));
-
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });

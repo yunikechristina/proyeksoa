@@ -1,5 +1,8 @@
 <?php
-		session_start();
+	session_start();
+    if (!isset($_SESSION['email'])) {
+        header("location:sign-in-admin.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +51,7 @@
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
                         <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                             <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li>
                     <li>
@@ -88,13 +92,12 @@
             <div class="row">
             <nav class="navbar navbar-light bg-light">
                 <div class="form-inline">
-                    <input class="form-control mr-sm-2" id="namaMovie" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="search">Search</button>
+                    <input class="form-control mr-sm-2" id="search-movie-keyword" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-movie-submit">Search</button>
                 </div>
             </nav>
         </div>
         <div class="row">
-                    <?php print_r($_SESSION); ?>
             <div class="col-sm-12">
                 <table class="table table-hover" id>
                     <thead>
@@ -117,7 +120,7 @@
         </div>
     </div>
 
-
+<!-- ADD MOVIE MODAL -->
     <div class="modal fade" role="dialog" id="add-movie-modal" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -152,25 +155,146 @@
             </div>
         </div>
     </div>
-   <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+<!-- EDIT MOVIE MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" id="edit-movie-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="movie-title">Title: </label>
+                    <input type="text" id="edit-movie-title" class="form-control" placeholder="Movie Title">
+                </div>
+                <div class="form-group">
+                    <label for="movie-sinopsis">Synopsis: </label>
+                    <input type="text" id="edit-movie-sinopsis" class="form-control" placeholder="Synopsis">
+                </div>
+                <div class="form-group">
+                    <label for="movie-year">Year: </label>
+                    <input type="text" id="edit-movie-year" class="form-control" placeholder="Year">
+                </div>
+                <div class="form-group">
+                    <label for="movie-genre">Genre: </label>
+                    <input type="text" id="edit-movie-genre" class="form-control" placeholder="Genre">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="edit-movie-submit" data="0" onclick="edit_movie()">Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    
     <script type="text/javascript">
         function load_data(){
             $("#movie-table").html('');
-            $.get('http://localhost:8800/public/movie',{}, function(data){
+            $.get('http://localhost:8008/public/movie',{}, function(data){
                 $.each(data, function(index,value){
-                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['name'] + '</td><td>' + value['qty'] + '</td>';
+                    // <td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
+                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button></td><td><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
                     $('#movie-table').append(line);
                 });
             });
         }
 
+        $.delete = function(url, data, callback, type){
+            if ( $.isFunction(data) ){
+            type = type || callback,
+                callback = data,
+                data = {}
+            }
+            return $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: callback,
+                data: data,
+                contentType: type
+            });
+        }
+        $.put = function(url, data, callback, type){
+            if ( $.isFunction(data) ){
+                type = type || callback,
+                callback = data,
+                data = {}
+            }
+            return $.ajax({
+                url: url,
+                type: 'PUT',
+                success: callback,
+                data: data,
+                contentType: type
+            });
+        }
+
+        //PORT VIEW
+        function delete_movie(id){
+            $.delete('http://localhost:8008/public/movie/' + id, {"_METHOD": "DELETE"}, function(data){
+                if(data['status'] == 0){
+                    alert(data['msg']);
+                }else{
+                    load_data();
+                }
+            });
+        }
+
+        function load_movie(id){
+            $.get('http://localhost:8008/public/movie/' + id, {}, function(data){
+                $("#edit-movie-title").val(data['judul']);
+                $("#edit-movie-year").val(data['tahun']);
+                $("#edit-movie-genre").val(data['genre']);
+                $("#edit-movie-sinopsis").val(data['sinopsis']);
+                $("#edit-movie-submit").data('id', id);
+                $("#edit-movie-modal").modal();
+            });
+        }
+
+        function edit_movie(){
+            var id = $("#edit-movie-submit").data('id');
+            var title = $("#edit-movie-title").val();
+            var year = $("#edit-movie-year").val();
+            var genre = $("#edit-movie-genre").val();
+            var sinopsis = $("#edit-movie-sinopsis").val();
+            $.put('http://localhost:8008/public/movie/' + id, {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genre}, function(data){
+                if(data['status'] == 0){
+                    alert(data['msg']);
+                }else{
+                    load_data();
+                    $("#edit-movie-title").val('');
+                    $("#edit-movie-year").val('');
+                    $("#edit-movie-genre").val('');
+                    $("#edit-movie-sinopsis").val('');
+                    $("#edit-movie-submit").data('id', 0);
+                    $("#edit-movie-sinopsis").modal('hide');
+                }
+            });
+        }
+
+         function search_movie(name){
+            $("#movie-table").html('');
+            $.get('http://localhost:8800/public/movie/search/'+name, {}, function(data){
+                $.each(data, function(index, value){
+                    //<td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
+                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button></td><td><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
+                    $("#movie-table").append(line);
+                });
+            });
+        }
+
         $(document).ready(function(){
-            load_data();
+            if ($("#search-movie-keyword").val() == "") {load_data();}
    
 
             $("#add-movie-submit").click(function(){
@@ -191,6 +315,14 @@
                         $("#add-movie-modal").modal('hide');
                     }
                 });
+            });
+
+            $("#search-movie-submit").click(function(){
+                if ($("#search-movie-keyword").val() == "") {load_data();}
+                else {
+                    var name = $("#search-movie-keyword").val();
+                    search_movie(name);
+                }
             });
         });
     </script>
