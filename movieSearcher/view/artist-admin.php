@@ -1,3 +1,9 @@
+<?php
+session_start();
+    if (!isset($_SESSION['email'])) {
+        header("location:sign-in-admin.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +66,7 @@
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
                     </li>
                     <li>
-                        <a href="sign-in.php" class="waves-effect"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Sign Out</a>
+                        <a href="sign-in-admin.php" class="waves-effect"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Sign Out</a>
                     </li>
                 </ul>
             </div>

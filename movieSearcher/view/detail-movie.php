@@ -82,19 +82,49 @@
             </div>
     </div>
     <div id="page-wrapper">
+        <h1 style="margin-left: 10px;">Movie Detail</h1>
+        <form style="width: 32%; margin-left: 20px; padding-top: 20px;">
+            <div class="form-group">
+                <label for="formGroupExampleInput">Movie Title</label>
+                <input type="text" class="form-control" id="movie-title" placeholder="Example input">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Year</label>
+                <input type="text" class="form-control" id="movie-year" placeholder="Another input">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Sinopsis</label>
+                <textarea class="form-control" id="movie-sinopsis" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Genre</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Action">
+                    <label class="form-check-label" for="inlineCheckbox1">Action</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Horror">
+                    <label class="form-check-label" for="inlineCheckbox2">Horror</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="Thriller">
+                    <label class="form-check-label" for="inlineCheckbox2">Thriller</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Comedy">
+                    <label class="form-check-label" for="inlineCheckbox2">Comedy</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Fantasy">
+                    <label class="form-check-label" for="inlineCheckbox2">Fantasy</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Animation">
+                    <label class="form-check-label" for="inlineCheckbox2">Animation</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Adventure">
+                    <label class="form-check-label" for="inlineCheckbox2">Adventure</label>
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="Romance">
+                    <label class="form-check-label" for="inlineCheckbox2">Romance</label>
+                </div>
+            </div>
+        </form>
         <div class="container-fluid">
             <div class="row row bg-title">
                 <div class="col">
-                    <h1 style="display: inline-block;">Movie List</h1>
-                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-movie-modal">Add Movie</button>
+                    <h1 style="display: inline-block;">Trailer List</h1>
+                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-movie-modal">Add Trailer</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-inline">
-                    <input class="form-control mr-sm-2" id="search-movie-keyword" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-movie-submit">Search</button>
-                </div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-hover" id>
@@ -115,36 +145,59 @@
         </div>
 
     </div>
+    <div class="container-fluid">
+            <div class="row row bg-title">
+                <div class="col">
+                    <h1 style="display: inline-block;">Image List</h1>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover" id>
+                    <thead>
+                        <tr>
+                            <th width="5%">#</th>
+                            <th width="20%">Movie Title</th>
+                            <th width="10%">Year</th>
+                            <th width="20%">Genre</th>
+                            <th width="20%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="movie-table">
 
+                    </tbody>
+                </table>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Input image</label>
+                <input type="file" class="form-control-file" id="movie-image">
+              </div>
+            </form>
         </div>
     </div>
+    <button type="button" style="float: right; margin-right: 30px;" class="btn btn-primary">SAVE</button>
+    </div>
+</div>
 
 <!-- ADD MOVIE MODAL -->
-    <div class="modal fade" role="dialog" id="add-movie-modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal fade" role="dialog" id="add-trailer-modal" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Movie</h5>
+                <h5 class="modal-title">Add Trailer</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="movie-title">Title: </label>
-                    <input type="text" id="movie-title" class="form-control" placeholder="Movie Title">
+                    <label for="trailer-link">Link: </label>
+                    <input type="text" id="trailer-link" class="form-control" placeholder="Movie Title">
                 </div>
                 <div class="form-group">
-                    <label for="movie-sinopsis">Synopsis: </label>
-                    <textarea class="form-control" id="movie-sinopsis" class="form-control" rows="3" placeholder="Synopsis"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="movie-year">Year: </label>
-                    <input type="text" id="movie-year" class="form-control" placeholder="Year">
-                </div>
-                <div class="form-group">
-                    <label for="movie-genre">Genre: </label>
-                    <input type="text" id="movie-genre" class="form-control" placeholder="Genre">
+                    <label for="movie-sinopsis">Id Movie: </label>
+                    <input type="text" id="movie-id" class="form-control" disabled>
                 </div>
             </div>
             <div class="modal-footer">
@@ -154,9 +207,8 @@
             </div>
         </div>
     </div>
-
-<!-- EDIT MOVIE MODAL -->
 <?php /*
+<!-- EDIT MOVIE MODAL -->
 <div class="modal fade" tabindex="-1" role="dialog" id="edit-movie-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -190,8 +242,7 @@
             </div>
             </div>
         </div>
-    </div>
-    */ ?>
+    </div>*/ ?>
 
 
    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -251,18 +302,6 @@
             });
         }
 
-        function load_movie(id){
-            $.get('http://localhost:8800/public/movie/' + id, {}, function(data){
-                window.location.href = "detail-movie.php?id="+id+"&judul="+data['judul']+"&tahun="+data['tahun']+"&genre="+data['genre']+"&sinopsis="+data['sinopsis'];
-                // $("#edit-movie-title").val(data['judul']);
-                // $("#edit-movie-year").val(data['tahun']);
-                // $("#edit-movie-genre").val(data['genre']);
-                // $("#edit-movie-sinopsis").val(data['sinopsis']);
-                // $("#edit-movie-submit").data('id', id);
-                // $("#edit-movie-modal").modal();
-            });
-        }
-
         function edit_movie(){
             var id = $("#edit-movie-submit").data('id');
             var title = $("#edit-movie-title").val();
@@ -296,6 +335,12 @@
         }
 
         $(document).ready(function(){
+            var queryString = decodeURIComponent(window.location.search);
+            queryString = queryString.substring(1);
+            var queries = queryString.split("&");
+            $("#movie-title").val(queries[1].split("=").pop());
+            $("#movie-year").val(queries[2].split("=").pop());
+            $("#movie-sinopsis").val(queries[4].split("=").pop());
 
             if ($("#search-movie-keyword").val() == "") {load_data();}
    

@@ -202,7 +202,7 @@ $app->get('/movie/search/{nama}', function (Request $request, Response $response
     return $newResponse;
 });
 
-$app->get('movie/{id}', function (Request $request, Response $response, array $args){
+$app->get('/movie/{id}', function (Request $request, Response $response, array $args){
     global $db;
     $id = $args['id'];
     $movie_model = new movie($db);
@@ -245,7 +245,7 @@ $app->put('/movie/{id}', function (Request $request, Response $response, array $
     //$data['img'],$data['trailer']
     $body = $movie_model->update_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['genre']);
     $response->getBody()->write(json_encode($body));
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS')->withHeader('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');;
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS')->withHeader('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
     return $newResponse;
 });
 
