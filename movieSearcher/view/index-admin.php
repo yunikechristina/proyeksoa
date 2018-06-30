@@ -55,7 +55,7 @@
                             <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li>
                     <li>
-                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $_SESSION['email']; ?></b></a>
+                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $_SESSION['nama']; ?></b></a>
                     </li>
                 </ul>
             </div>
@@ -294,10 +294,15 @@
         }
 
         $(document).ready(function(){
+<<<<<<< HEAD
             if ($("#search-movie-keyword").val() == "") {load_data();}
    
 
             $("#add-movie-submit").click(function(){
+=======
+            load_data();
+               $("#add-movie-submit").click(function(){
+>>>>>>> d37a5cad40170a709cef91c0bbd21b831ad37911
                 var title = $("#movie-title").val();
                 var sinopsis = $("#movie-sinopsis").val();
                 var genre = $("#movie-genre").val();

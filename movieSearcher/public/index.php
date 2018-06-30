@@ -106,29 +106,8 @@ $app->get('/user/{id}', function (Request $request, Response $response, array $a
     return $newResponse;
 });
 
-$app->get('/admin/{id}', function (Request $request, Response $response, array $args) {
-    global $db;
-    $id = $args['id'];
-    $user_model = new user($db);
-    $user_model->load($id);
-    $body = $user_model->get_data();
-    $response->getBody()->write(json_encode($body));
-
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
-
 $app->get('/user',function (Request $request, Response $response, array $args){
 	global $db;
-    $user_model = new user($db);
-    $body = $user_model->load_all();
-    $response->getBody()->write(json_encode($body));
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
-
-$app->get('/admin',function (Request $request, Response $response, array $args){
-    global $db;
     $user_model = new user($db);
     $body = $user_model->load_all();
     $response->getBody()->write(json_encode($body));
@@ -147,16 +126,6 @@ $app->post('/user/login', function (Request $request, Response $response, array 
     return $newResponse;
 });
 
-$app->post('/admin/login', function (Request $request, Response $response, array $args) {
-    global $db;
-    $data = $request->getParsedBody();
-    $user_model = new user($db);
-    $body = $user_model->login($data['email'], $data['password']);
-    $response->getBody()->write(json_encode($body));
-
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
 
 $app->post('/user/register',function (Request $request, Response $response, array $args){
 	global $db;
@@ -169,16 +138,6 @@ $app->post('/user/register',function (Request $request, Response $response, arra
     return $newResponse;
 });
 
-$app->post('/admin/register',function (Request $request, Response $response, array $args){
-    global $db;
-    $data = $request->getParsedBody();
-    $user_model = new user($db);
-    $body = $user_model->register($data['nama'], $data['email'], $data['password'], $data['status'], $data['subscribe']);
-    $response->getBody()->write(json_encode($body));
-
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
 
 $app->put('/user/subscribe/{id}', function (Request $request, Response $response, array $args) {
     global $db;
@@ -206,18 +165,6 @@ $app->put('/user/{id}', function (Request $request, Response $response, array $a
     return $newResponse;
 });
 
-$app->put('/admin/{id}', function (Request $request, Response $response, array $args){
-    global $db;
-    $id = $args['id'];
-    $data = $request->getParsedBody();
-    $user_model = new user($db);
-    $user_model->load($id);
-    $body = $user_model->update_user($data['nama'], $data['email'], $data['password'], $data['subscribe']);
-    $response->getBody()->write(json_encode($body));
-
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
 
 $app->delete('/user/{id}', function (Request $request, Response $response, array $args) {
     global $db;
@@ -235,21 +182,6 @@ $app->delete('/user/{id}', function (Request $request, Response $response, array
     return $newResponse;
 });
 
-$app->delete('/admin/{id}', function (Request $request, Response $response, array $args) {
-    global $db;
-    $id = $args['id'];
-    $data = $request->getParsedBody();
-    $user_model = new user($db);
-    $user_model->load($id);
-    $body = $user_model->delete_user();
-    $response->getBody()->write(json_encode($body));
-
-    $newResponse = $response->withHeader('Content-type', 'application/json')
-                            ->withHeader('Access-Control-Allow-Origin', '*')
-                            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-                            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    return $newResponse;
-});
 
 /* MOVIE
 add_movie($judul,$tahun,$sinopsis,$img,$trailer,$genre)

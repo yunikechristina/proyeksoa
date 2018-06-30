@@ -28,23 +28,15 @@
       if(isset($decoded->response->status) && $decoded->response->status == 0) {
           die('error occured: ' . $decoded->response->msg);
       }
+      $con = mysqli_connect("localhost", "root", "", "proyek_soa");
+      $sql = "SELECT * FROM user WHERE email = '".$_POST['email']."'";
+      $res = mysqli_query($con, $sql);
+      $data = mysqli_fetch_assoc($res);
+      $_SESSION['id'] = $data['id'];
+      $_SESSION['nama'] = $data['nama'];
       $_SESSION['email'] = $_POST['email'];
       echo 'response ok!';
       var_export($decoded->response);
-      // $url = 'http://localhost:8800/public/user/login';
-      // $data = array('email' => $_POST['email'], 'password' => $_POST['password']);
-      // $options = array(
-      //   'http' => array(
-      //       'header'  => "Content-type: application/x-www-form-urlencoded",
-      //       'method'  => 'POST',
-      //       'content' => http_build_query($data),
-      //       'timeout' => 5
-      //     )
-      // );
-      // $context  = stream_context_create($options);
-      // $result = file_get_contents($url, false, $context);
-      // $test = json_decode($result, true);
-      // return $test;
       header("location:index-admin.php");
     }
 ?>
@@ -116,19 +108,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        // function signin(){
-        //   var email = $('#login-email').val();
-        //   var password = $('#login-password').val();
-        //   $.post('http://localhost:8080/public/user/login',{'email' : email, 'password' : password},function(data){
-        //       if(data['status'] == 0){
-        //         alert(data['msg']);
-        //       }else{
-        //         alert(data['msg']);
-        //         window.location.href="index-admin.php";
-        //       }
-        //     });
-        // }
-
         function signup(){
           var nama = $('#register-user-nama').val();
           var email = $('#register-user-email').val();
