@@ -246,13 +246,59 @@
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
-        function load_data(){
+        function decode_base64 (s)
+        {
+            var e = {}, i, k, v = [], r = '', w = String.fromCharCode;
+            var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];
+
+            for (z in n)
+            {
+                for (i = n[z][0]; i < n[z][1]; i++)
+                {
+                    v.push(w(i));
+                }
+            }
+            for (i = 0; i < 64; i++)
+            {
+                e[v[i]] = i;
+            }
+
+            for (i = 0; i < s.length; i+=72)
+            {
+                var b = 0, c, x, l = 0, o = s.substring(i, i+72);
+                for (x = 0; x < o.length; x++)
+                {
+                    c = e[o.charAt(x)];
+                    b = (b << 6) + c;
+                    l += 6;
+                    while (l >= 8)
+                    {
+                        r += w((b >>> (l -= 8)) % 256);
+                    }
+                 }
+            }
+            return r;
+        }
+
+        function load_data(id){
             $("#trailer-table").html('');
             $.get('http://localhost:8008/public/trailer',{}, function(data){
                 $.each(data, function(index,value){
                     // <td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
                     var line = '<tr><td>' + (index + 1) + '</td><td><iframe width="420" height="315" src="'+value['link']+'"></iframe></td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_trailer(' + value['id'] + ')">Detail</button><button class="btn btn-danger" onclick="delete_trailer(' + value['id'] + ')">Delete</button></td></tr>';
                     $('#trailer-table').append(line);
+                });
+            });
+
+            $("#image-table").html('');
+            $.get('http://localhost:8008/public/image/search/'+id,{}, function(data){
+                $.each(data, function(index,value){
+                    //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama_file'] + '</td><td><img id="myimg" width="420" height="315" src="data:'+value['tipe']+';base64,' + value['data'] +'" /></td><td><button class="btn btn-danger" onclick="delete_image(' + value['id'] + ')">Delete</button></td></tr>';
+                    $('#image-table').append(line);
+
+                    //$('#myimg').attr('src', "data:image/"+ value['tipe'] +";base64,"+value['data'])
+                    //$('#image-table').append(line);
                 });
             });
         }
@@ -318,7 +364,6 @@
             });
         }
         $(document).ready(function(){
-            load_data();
             var queryString = decodeURIComponent(window.location.search);
             queryString = queryString.substring(1);
             var queries = queryString.split("&");
@@ -326,6 +371,7 @@
             $("#movie-year").val(queries[2].split("=").pop());
             $("#movie-sinopsis").val(queries[4].split("=").pop());
             $("#movie-id").val(queries[0].split("=").pop());
+            load_data(queries[0].split("=").pop());
 
             $("#add-trailer-submit").click(function(){
                 var link = $("#trailer-link").val();

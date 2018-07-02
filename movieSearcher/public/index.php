@@ -467,10 +467,8 @@ $app->get('/image/search/{id_movie}',function (Request $request, Response $respo
     global $db;
     $id_movie = $args['id_movie'];
     $image_model = new image($db);
-    $image_model->search_image_by_movie($id_movie);
-    $body = $image_model->get_data();
+    $body = $image_model->search_image_by_movie($id_movie);
     $response->getBody()->write(json_encode($body));
-
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
