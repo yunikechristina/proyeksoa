@@ -145,7 +145,7 @@ $app->put('/user/subscribe/{id}', function (Request $request, Response $response
     $data = $request->getParsedBody();
     $user_model = new user($db);
     $user_model->load($id);
-    $body = $user_model->subscribe($data['subscribe']);
+    $body = $user_model->susbscribe($data['subscribe']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -439,7 +439,7 @@ search_image_by_nama_file($nama_file) v
 search_image_by_movie($id_movie) v
 */
 
-$app->get('/image/download/{id}', function(Request $request, Response $res, array $args) { 
+$app->get('/image/download/{id}', function(Request $request, Response $res, array $args) {
     global $db;
     $id = $args['id'];
     $image_model = new image($db);
@@ -527,6 +527,71 @@ $app->delete('/image/{id}', function (Request $request, Response $response, arra
     $image_model = new image($db);
     $image_model->load($id);
     $body = $image_model->delete_image();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')
+                            ->withHeader('Access-Control-Allow-Origin', '*')
+                            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    return $newResponse;
+});
+
+/* DETAIL ARTIS */
+$app->get('/detail_artis/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $dtl_model = new detail_artis($db);
+    $dtl_model->load($id);
+    $body = $dtl_model->get_data();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->get('/detail_artis',function (Request $request, Response $response, array $args){
+    global $db;
+    $dtl_model = new detail_artis($db);
+    $dtl_model->load_all();
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->post('/detail_artis',function (Request $request, Response $response, array $args){
+    global $db;
+    $data = $request->getParsedBody();
+    $dtl_model = new detail_artis($db);
+    //($nama_file, $tipe, $dataa, $ukuran, $id_movie)
+    $body = $dtl_model->add_detail_artis($data['peran'], $data['id_artis'], $data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+//tidak dipakai
+$app->put('/image/{id}', function (Request $request, Response $response, array $args){
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $dtl_model = new detail_artis($db);
+    $dtl_model->load($id);
+    $body = $image_model->edit_detail_artis($data['peran'], $data['id_artis'], $data['id_movie']);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
+$app->delete('/image/{id}', function (Request $request, Response $response, array $args) {
+    global $db;
+    $id = $args['id'];
+    $data = $request->getParsedBody();
+    $dtl_model = new detail_artis($db);
+    $dtl_model->load($id);
+    $body = $image_model->delete_detail_artis();
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')
