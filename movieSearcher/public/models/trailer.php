@@ -38,6 +38,7 @@ class trailer{
   	}
 
   	public function add_trailer($link,$id_movie){
+      $link = 'https://www.youtube.com/embed/'.$link;
     	$sql = "INSERT INTO trailer VALUES(default, '".$link."',".$id_movie.")";
    		$res = mysqli_query($this->db->con, $sql);
     	if ($res){
@@ -48,6 +49,7 @@ class trailer{
   	}
 
   	public function edit_trailer($link,$id_movie){
+      $link = 'https://www.youtube.com/embed/'.$link;
     	$sql = "UPDATE trailer SET link='".$link."', id_movie=".$id_movie." WHERE id =".$this->id;
     	$res = mysqli_query($this->db->con, $sql);
     	if ($res){
@@ -77,5 +79,8 @@ class trailer{
     	return $return;
   	}
 };
-
+// require_once '../database.php';
+// $db = new Database();
+// $movie = new trailer($db);
+// print_r(json_encode($movie->search_trailer_by_movie(1)));
 ?>

@@ -145,7 +145,7 @@ $app->put('/user/subscribe/{id}', function (Request $request, Response $response
     $data = $request->getParsedBody();
     $user_model = new user($db);
     $user_model->load($id);
-    $body = $user_model->susbscribe($data['subscribe']);
+    $body = $user_model->subscribe($data['subscribe']);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -243,9 +243,9 @@ $app->put('/movie/{id}', function (Request $request, Response $response, array $
     $movie_model = new movie($db);
     $movie_model->load($id);
     //$data['img'],$data['trailer']
-    $body = $movie_model->update_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['genre']);
+    $body = $movie_model->edit_movie($data['judul'],$data['tahun'],$data['sinopsis'],$data['genre']);
     $response->getBody()->write(json_encode($body));
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS')->withHeader('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
     return $newResponse;
 });
 
@@ -354,10 +354,9 @@ search_trailer_by_movie($id_movie)*/
 
 $app->get('/trailer/search/{id_movie}',function (Request $request, Response $response, array $args){
     global $db;
-    $nama = $args['nama'];
+    $id_movie = $args['id_movie'];
     $trailer_model = new trailer($db);
-    $trailer_model->search_trailer_by_movie($id_movie);
-    $body = $trailer_model->get_data();
+    $body = $trailer_model->search_trailer_by_movie($id_movie);
     $response->getBody()->write(json_encode($body));
 
     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
@@ -572,34 +571,34 @@ $app->post('/detail_artis',function (Request $request, Response $response, array
 });
 
 //tidak dipakai
-$app->put('/image/{id}', function (Request $request, Response $response, array $args){
-    global $db;
-    $id = $args['id'];
-    $data = $request->getParsedBody();
-    $dtl_model = new detail_artis($db);
-    $dtl_model->load($id);
-    $body = $image_model->edit_detail_artis($data['peran'], $data['id_artis'], $data['id_movie']);
-    $response->getBody()->write(json_encode($body));
+// $app->put('/image/{id}', function (Request $request, Response $response, array $args){
+//     global $db;
+//     $id = $args['id'];
+//     $data = $request->getParsedBody();
+//     $dtl_model = new detail_artis($db);
+//     $dtl_model->load($id);
+//     $body = $image_model->edit_detail_artis($data['peran'], $data['id_artis'], $data['id_movie']);
+//     $response->getBody()->write(json_encode($body));
 
-    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
-    return $newResponse;
-});
+//     $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+//     return $newResponse;
+// });
 
-$app->delete('/image/{id}', function (Request $request, Response $response, array $args) {
-    global $db;
-    $id = $args['id'];
-    $data = $request->getParsedBody();
-    $dtl_model = new detail_artis($db);
-    $dtl_model->load($id);
-    $body = $image_model->delete_detail_artis();
-    $response->getBody()->write(json_encode($body));
+// $app->delete('/image/{id}', function (Request $request, Response $response, array $args) {
+//     global $db;
+//     $id = $args['id'];
+//     $data = $request->getParsedBody();
+//     $dtl_model = new detail_artis($db);
+//     $dtl_model->load($id);
+//     $body = $image_model->delete_detail_artis();
+//     $response->getBody()->write(json_encode($body));
 
-    $newResponse = $response->withHeader('Content-type', 'application/json')
-                            ->withHeader('Access-Control-Allow-Origin', '*')
-                            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-                            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    return $newResponse;
-});
+//     $newResponse = $response->withHeader('Content-type', 'application/json')
+//                             ->withHeader('Access-Control-Allow-Origin', '*')
+//                             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+//                             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+//     return $newResponse;
+// });
 
 $app->run();
 

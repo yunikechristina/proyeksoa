@@ -85,12 +85,16 @@
         <h1 style="margin-left: 10px;">Movie Detail</h1>
         <form style="width: 32%; margin-left: 20px; padding-top: 20px;">
             <div class="form-group">
+                <label for="formGroupExampleInput">Movie ID</label>
+                <input type="text" class="form-control" id="movie-id" disabled>
+            </div>
+            <div class="form-group">
                 <label for="formGroupExampleInput">Movie Title</label>
-                <input type="text" class="form-control" id="movie-title" placeholder="Example input">
+                <input type="text" class="form-control" id="movie-title" placeholder="Movie Title">
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Year</label>
-                <input type="text" class="form-control" id="movie-year" placeholder="Another input">
+                <input type="text" class="form-control" id="movie-year" placeholder="Year">
             </div>
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Sinopsis</label>
@@ -171,7 +175,7 @@
             </form>
         </div>
     </div>
-    <button type="button" style="float: right; margin-right: 30px;" class="btn btn-primary">SAVE</button>
+    <button type="button" style="float: right; margin-right: 30px;" id="movie-id" class="btn btn-primary" onclick="save()">SAVE</button>
     </div>
 </div>
 
@@ -180,7 +184,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Trailer</h5>
+                <h3 class="modal-title">Add Trailer</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -188,11 +192,11 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="trailer-link">Link: </label>
-                    <input type="text" id="trailer-link" class="form-control" placeholder="Link">
+                    <input type="text" id="add-trailer-link" class="form-control" placeholder="Link">
                 </div>
                 <div class="form-group">
-                    <label for="movie-sinopsis">Id Movie: </label>
-                    <input type="text" id="movie-id" class="form-control" disabled>
+                    <label for="trailer-id-movie">Id Movie: </label>
+                    <input type="text" id="add-movie-id" class="form-control" disabled>
                 </div>
             </div>
             <div class="modal-footer">
@@ -202,42 +206,33 @@
             </div>
         </div>
     </div>
-<?php /*
 <!-- EDIT MOVIE MODAL -->
-<div class="modal fade" tabindex="-1" role="dialog" id="edit-movie-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="edit-trailer-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Product</h5>
+                <h3 class="modal-title">Edit Trailer</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="movie-title">Title: </label>
-                    <input type="text" id="edit-movie-title" class="form-control" placeholder="Movie Title">
+                    <label for="trailer-link">Link: </label>
+                    <input type="text" id="edit-trailer-link" class="form-control" placeholder="Link">
                 </div>
                 <div class="form-group">
-                    <label for="movie-sinopsis">Synopsis: </label>
-                    <input type="text" id="edit-movie-sinopsis" class="form-control" placeholder="Synopsis">
-                </div>
-                <div class="form-group">
-                    <label for="movie-year">Year: </label>
-                    <input type="text" id="edit-movie-year" class="form-control" placeholder="Year">
-                </div>
-                <div class="form-group">
-                    <label for="movie-genre">Genre: </label>
-                    <input type="text" id="edit-movie-genre" class="form-control" placeholder="Genre">
+                    <label for="trailer-id-movie">Id movie: </label>
+                    <input type="text" id="edit-trailer-id-movie" class="form-control" disabled>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="edit-movie-submit" data="0" onclick="edit_movie()">Edit</button>
+                <button type="button" class="btn btn-primary" id="edit-trailer-submit" data="0" onclick="edit_trailer()">Edit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             </div>
         </div>
-    </div>*/ ?>
+    </div>
 
 
    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -282,24 +277,32 @@
 
         function load_data(id){
             $("#trailer-table").html('');
-            $.get('http://localhost:8008/public/trailer',{}, function(data){
+            $.get('http://localhost:8008/public/trailer/search/'+id,{}, function(data){
                 $.each(data, function(index,value){
                     // <td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
-                    var line = '<tr><td>' + (index + 1) + '</td><td><iframe width="420" height="315" src="'+value['link']+'"></iframe></td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_trailer(' + value['id'] + ')">Detail</button><button class="btn btn-danger" onclick="delete_trailer(' + value['id'] + ')">Delete</button></td></tr>';
+                    var line = '<tr><td>' + (index + 1) + '</td><td><iframe width="420" height="315" src="'+value['link']+'"></iframe></td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_trailer(' + value['id'] + ')">Edit</button><button class="btn btn-danger" onclick="delete_trailer(' + value['id'] + ')">Delete</button></td></tr>';
                     $('#trailer-table').append(line);
                 });
             });
 
-            $("#image-table").html('');
-            $.get('http://localhost:8008/public/image/search/'+id,{}, function(data){
-                $.each(data, function(index,value){
-                    //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
-                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama_file'] + '</td><td><img id="myimg" width="420" height="315" src="data:'+value['tipe']+';base64,' + value['data'] +'" /></td><td><button class="btn btn-danger" onclick="delete_image(' + value['id'] + ')">Delete</button></td></tr>';
-                    $('#image-table').append(line);
+            // $("#image-table").html('');
+            // $.get('http://localhost:8008/public/image/search/'+id,{}, function(data){
+            //     $.each(data, function(index,value){
+            //         //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+            //         var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama_file'] + '</td><td><img id="myimg" width="420" height="315" src="data:'+value['tipe']+';base64,' + value['data'] +'" /></td><td><button class="btn btn-danger" onclick="delete_image(' + value['id'] + ')">Delete</button></td></tr>';
+            //         $('#image-table').append(line);
 
-                    //$('#myimg').attr('src', "data:image/"+ value['tipe'] +";base64,"+value['data'])
-                    //$('#image-table').append(line);
-                });
+            //         //$('#myimg').attr('src', "data:image/"+ value['tipe'] +";base64,"+value['data'])
+            //         //$('#image-table').append(line);
+            //     });
+            // });
+        }
+        function load_trailer(id){
+            $.get('http://localhost:8800/public/trailer/' + id, {}, function(data){
+                $("#edit-trailer-link").val(data['link']);
+                $("#edit-trailer-id-movie").val(data['id_movie']);
+                $("#edit-trailer-submit").data('id', id);
+                $("#edit-trailer-modal").modal();
             });
         }
 
@@ -334,32 +337,45 @@
 
         //PORT VIEW
         function delete_trailer(id){
-            $.delete('http://localhost:8008/public/movie/' + id, {"_METHOD": "DELETE"}, function(data){
+            $.delete('http://localhost:8008/public/trailer/' + id, {"_METHOD": "DELETE"}, function(data){
                 if(data['status'] == 0){
                     alert(data['msg']);
                 }else{
-                    load_data();
+                    load_data($("#movie-id").val());
                 }
             });
         }
 
-        function edit_movie(){
-            var id = $("#edit-movie-submit").data('id');
-            var title = $("#edit-movie-title").val();
-            var year = $("#edit-movie-year").val();
-            var genre = $("#edit-movie-genre").val();
-            var sinopsis = $("#edit-movie-sinopsis").val();
-            $.put('http://localhost:8008/public/movie/' + id, {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genre}, function(data){
+        function edit_trailer(){
+            var id = $("#edit-trailer-submit").data('id');
+            var link = $("#edit-trailer-link").val();
+            var id_movie = $("#edit-trailer-id-movie").val();
+            $.put('http://localhost:8008/public/trailer/' + id, {'link': link, 'id_movie': id_movie}, function(data){
                 if(data['status'] == 0){
                     alert(data['msg']);
                 }else{
                     load_data();
-                    $("#edit-movie-title").val('');
-                    $("#edit-movie-year").val('');
-                    $("#edit-movie-genre").val('');
-                    $("#edit-movie-sinopsis").val('');
-                    $("#edit-movie-submit").data('id', 0);
-                    $("#edit-movie-sinopsis").modal('hide');
+                    $("#edit-trailer-link").val('');
+                    $("#edit-trailer-id-movie").val('');
+                    $("#edit-trailer-submit").data('id', 0);
+                    $("#edit-trailer-modal").modal('hide');
+                }
+            });
+        }
+        function save(){
+            var genres = [];
+            var title=$("#movie-title").val();
+            var year=$("#movie-year").val();
+            var sinopsis=$("#movie-sinopsis").val();
+            var id=$("#movie-id").val();
+            $('input[class=form-check-input]:checked').each(function(){
+                genres.push(this.value);
+            });
+            $.put('http://localhost:8008/public/movie/' + id, {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genres.toString()}, function(data){
+                if(data['status'] == 0){
+                    alert(data['msg']);
+                }else{
+                    window.location.href="index-admin.php";
                 }
             });
         }
@@ -371,18 +387,28 @@
             $("#movie-year").val(queries[2].split("=").pop());
             $("#movie-sinopsis").val(queries[4].split("=").pop());
             $("#movie-id").val(queries[0].split("=").pop());
+            $("#add-movie-id").val(queries[0].split("=").pop());
+            var array = queries[3].split("=").pop().split(",");
+            for(i=0;i<array.length;i++){
+                $('input[class=form-check-input]').each(function(){
+                    if(this.value == array[i]){
+                        $('input[value='+this.value+']').prop('checked',true);
+                    }
+                });
+            }
             load_data(queries[0].split("=").pop());
 
             $("#add-trailer-submit").click(function(){
-                var link = $("#trailer-link").val();
-                var movie_id = $("#movie-id").val();
+                var link = $("#add-trailer-link").val();
+                var movie_id = $("#add-movie-id").val();
                 $.post('http://localhost:8008/public/trailer', {'link': link, 'id_movie': movie_id}, function(data){
                     if(data['status'] == 0){
                         alert(data['msg']);
                     }else{
-                        load_data();
-                        $("#trailer-link").val('');
-                        $("#add-movie-modal").modal('hide');
+                        load_data(movie_id);
+                        $("#add-trailer-link").val('');
+                        $("#add-movie-id").val('');
+                        $("#add-trailer-modal").modal('hide');
                     }
                 });
             });
