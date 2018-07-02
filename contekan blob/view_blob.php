@@ -1,7 +1,7 @@
 <?php 
 
 $con = mysqli_connect("localhost","root","","proyek_soa");
-$sql = "SELECT * FROM image WHERE id = 8";
+$sql = "SELECT * FROM image WHERE id = 11";
 $res = mysqli_query ($con,$sql); //$db->query($sql);
 $result=mysqli_fetch_array($res);
 echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';

@@ -19,12 +19,13 @@ class image{
     //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
 
     $res = mysqli_query($this->db->con, $sql);
-    $data = mysqli_fetch_assoc($res);
+    $data = mysqli_fetch_assoc($res);    
     $this->id = $data['id'];
     $this->nama_file = $data['nama_file'];
     $this->tipe = $data['tipe'];
     $this->dataa = $data['data'];
     $this->id_movie = $data['id_movie'];
+
   }
 
   public function load_all() {
@@ -42,7 +43,7 @@ class image{
       'id'=>$this->id,
       'nama_file'=>$this->nama_file,
       'tipe'=>$this->tipe,
-      'dataa'=>$this->dataa,
+      'dataa'=>$this->base64_encode(dataa),
       'id_movie'=>$this->id_movie
     );
   }
@@ -52,7 +53,7 @@ class image{
     $basename = pathinfo($uploadedFile->getClientFilename(), PATHINFO_FILENAME);
    
     $filename = sprintf('%s.%0.8s', $basename, $extension);
-     $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".$dataa.",'".$ukuran.",'".$id_movie."')";
+     $sql = "INSERT INTO image VALUES(default, '".$nama_file."','".$tipe."',".base64_decode($dataa).",'".$ukuran.",'".$id_movie."')";
    
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
      $res = mysqli_query($this->db->con,$sql);
@@ -116,18 +117,18 @@ public function search_image_by_movie($id_movie){
   $res = mysqli_query($this->db->con, $sql);
   $return = array();
   while ($row = mysqli_fetch_assoc($res)) {
-    $return[] = $row;
+    $return[] = array_map('utf8_encode', $row);
   }
   return $return;
 }
 
 };
 
-//require_once '../database.php';
-//$db = new Database();
-//$movie = new image($db);
+// require_once '../database.php';
+// $db = new Database();
+// $movie = new image($db);
 //print_r($movie->load_all());
-//print_r($movie->load(5));
+//print_r($movie->load(6));
 //print_r($movie->delete_image());
 //print_r($movie->get_data());
 //print_r($movie->search_image_by_nama_file('hehe'));
