@@ -93,7 +93,7 @@ $movie = new movie($db);
 //add_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre
 //print_r($movie->add_movie("Thor: Ragnarok", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarök, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));
 
-//print_r($movie->load(2));
+//print_r($movie->load(1));
 //print_r($movie->get_data());
 //edit_movie($judul,$tahun,$sinopsis,$id_image,$trailer,$genre)
 //print_r($movie->edit_movie("Thor: Ragnarök", 2017, "Thor is imprisoned on the planet Sakaar, and must race against time to return to Asgard and stop Ragnarok, the destruction of his world, at the hands of the powerful and ruthless villain Hela.", "", "https://youtu.be/ue80QwXMRHg", "Action, Adventure, Comedy"));

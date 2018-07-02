@@ -32,7 +32,7 @@ class image{
     $res = mysqli_query($this->db->con, $sql);
     $return = array();
     while ($row = mysqli_fetch_assoc($res)) {
-      $return[] = $row;
+      $return[] = array_map('utf8_encode', $row);
     }
     return $return;
   }
@@ -136,49 +136,3 @@ public function search_image_by_movie($id_movie){
 //print_r($movie->add_image("gils keren bezz",2,3));
 
 //print_r($movie->edit_image("Thor ganteng", 1, 3));
-
-// $app->post('/file/upload', function(Request $request, Response $response) {
-//     global $db;
-//     $directory = $this->get('upload_directory');
-
-//     $id_user = $request->getParsedBody();
-//     $id = $id_user['id'];
-     
-//     $date = $id_user['date'];
-//     $time=$id_user['time'];
-//     $uploadedFiles = $request->getUploadedFiles();
-//     //$id=$request->getParsedBody();
-//     $file_model=new File($db);
-//     //$id_user=$id['id'];
-
-//     // handle single input with single file upload
-//     $uploadedFile = $uploadedFiles['example1'];
-//     foreach ($uploadedFiles['example1'] as $uploadedFile) {
-//         if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-//              $filename =$file_model->moveUploadedFile($id,$directory, $uploadedFile,$date,$time);
-//         $response->write('uploaded '   );
-//         }
-//     }
-// });
-?>
-<?php /*
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
-  <form method="POST" action="http://localhost:8000/public/file/upload" enctype="multipart/form-data">
-            <label>Select file to upload:</label>
-            <input type="file" name="example1[]" multiple="multiple">
-            <button class="btn btn-default">Submit</button>
-            <input type="hidden" id="name" name="name" value="<?=$_SESSION['username']?>">
-             <input type="hidden" id="id" name="id" value="<?=$_SESSION['id']?>">
-             <input type="hidden" id="date" name="date" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("Y-m-d") ?>"    >
-             <input type="hidden" id="time" name="time" value="<?php date_default_timezone_set('Asia/Jakarta'); echo date("H:i:s") ?>"    >
-
-        </form>
-</body>
-</html>
-
-*/?>
