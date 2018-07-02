@@ -50,11 +50,6 @@
             <div class="navbar-header">
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                             <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-                    </li>
-                    <li>
                         <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $_SESSION['nama']; ?></b></a>
                     </li>
                 </ul>
@@ -73,7 +68,7 @@
                         <a href="artist-admin.php" class="waves-effect"><i class="fa  fa-star-half-empty fa-fw" aria-hidden="true"></i>Artist List</a>
                     </li>
                     <li>
-                        <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
+                        <a href="user-admin.php" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
                     </li>
                     <li>
                         <a href="sign-in-admin.php" class="waves-effect"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Sign Out</a>
@@ -306,7 +301,7 @@
             $.get('http://localhost:8800/public/movie/search/'+name, {}, function(data){
                 $.each(data, function(index, value){
                     //<td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
-                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button></td><td><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
+                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['judul'] + '</td><td>' + value['tahun'] + '</td><td>' + value['genre'] + '</td><td><button class="btn btn-success" onclick="load_movie(' + value['id'] + ')">Detail</button><button class="btn btn-danger" onclick="delete_movie(' + value['id'] + ')">Delete</button></td></tr>';
                     $("#movie-table").append(line);
                 });
             });

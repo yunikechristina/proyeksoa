@@ -165,6 +165,17 @@ $app->put('/user/{id}', function (Request $request, Response $response, array $a
     return $newResponse;
 });
 
+$app->get('/user/search/{nama}', function (Request $request, Response $response, array $args){
+    global $db;
+    $nama = $args['nama'];
+    $user_model = new user($db);
+    $body =  $user_model->search_user($nama);
+    $response->getBody()->write(json_encode($body));
+
+    $newResponse = $response->withHeader('Content-type', 'application/json')->withHeader('Access-Control-Allow-Origin', '*');
+    return $newResponse;
+});
+
 
 $app->delete('/user/{id}', function (Request $request, Response $response, array $args) {
     global $db;

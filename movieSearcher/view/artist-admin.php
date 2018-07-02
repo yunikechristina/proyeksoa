@@ -41,11 +41,7 @@ session_start();
             <div class="navbar-header">
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-                    </li>
-                    <li>
-                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b></a>
+                        <a class="profile-pic" href="#"> <img src="profile.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $_SESSION['nama']; ?></b></a>
                     </li>
                 </ul>
             </div>
@@ -63,7 +59,7 @@ session_start();
                         <a href="artist-admin.php" class="waves-effect active"><i class="fa  fa-star-half-empty fa-fw" aria-hidden="true"></i>Artist List</a>
                     </li>
                     <li>
-                        <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
+                        <a href="user-admin.php" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
                     </li>
                     <li>
                         <a href="sign-in-admin.php" class="waves-effect"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Sign Out</a>

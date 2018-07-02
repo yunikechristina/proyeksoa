@@ -26,7 +26,7 @@ class user{
   }
 
   public function load_all() {
-    $sql = "SELECT * FROM user";
+    $sql = "SELECT * FROM user WHERE status='user'";
     $res = mysqli_query($this->db->con, $sql);
     $return = array();
     while ($row = mysqli_fetch_assoc($res)) {
@@ -110,6 +110,16 @@ class user{
     } else {
       return array('status'=>0, 'msg'=>"Cannot delete user to DB");
     }
+  }
+
+  public function search_user($name){
+    $sql = "SELECT * FROM user WHERE nama LIKE '%".$name."%' AND status = 'user'";
+    $res = mysqli_query($this->db->con, $sql);
+    $return = array();
+    while ($row = mysqli_fetch_assoc($res)) {
+      $return[] = $row;
+    }
+    return $return;
   }
 };
 
