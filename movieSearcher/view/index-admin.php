@@ -67,10 +67,10 @@
                 </div>
                 <ul class="nav" id="side-menu">
                     <li style="padding: 70px 0 0;">
-                        <a href="index.php" class="waves-effect active"><i class="fa fa-film fa-fw" aria-hidden="true"></i>Movie List</a>
+                        <a href="index-admin.php" class="waves-effect active"><i class="fa fa-film fa-fw" aria-hidden="true"></i>Movie List</a>
                     </li>
                     <li>
-                        <a href="artist.php" class="waves-effect"><i class="fa  fa-star-half-empty fa-fw" aria-hidden="true"></i>Artist List</a>
+                        <a href="artist-admin.php" class="waves-effect"><i class="fa  fa-star-half-empty fa-fw" aria-hidden="true"></i>Artist List</a>
                     </li>
                     <li>
                         <a href="basic-table.html" class="waves-effect"><i class="fa fa-users fa-fw" aria-hidden="true"></i>User List</a>
@@ -124,7 +124,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Movie</h5>
+                <h3 class="modal-title">Add Movie</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -143,9 +143,26 @@
                     <input type="text" id="movie-year" class="form-control" placeholder="Year">
                 </div>
                 <div class="form-group">
-                    <label for="movie-genre">Genre: </label>
-                    <input type="text" id="movie-genre" class="form-control" placeholder="Genre">
-                </div>
+                    <label for="formGroupExampleInput2">Genre</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Action">
+                        <label class="form-check-label" for="inlineCheckbox1">Action</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Horror">
+                        <label class="form-check-label" for="inlineCheckbox2">Horror</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Thriller">
+                        <label class="form-check-label" for="inlineCheckbox2">Thriller</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Comedy">
+                        <label class="form-check-label" for="inlineCheckbox2">Comedy</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Fantasy">
+                        <label class="form-check-label" for="inlineCheckbox2">Fantasy</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Animation">
+                        <label class="form-check-label" for="inlineCheckbox2">Animation</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Adventure">
+                        <label class="form-check-label" for="inlineCheckbox2">Adventure</label>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox" value="Romance">
+                        <label class="form-check-label" for="inlineCheckbox2">Romance</label>
+                    </div>
+            </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="add-movie-submit">Add</button>
@@ -301,19 +318,21 @@
    
 
             $("#add-movie-submit").click(function(){
+                var genres = [];
                 var title = $("#movie-title").val();
                 var sinopsis = $("#movie-sinopsis").val();
-                var genre = $("#movie-genre").val();
+                $('input[class=form-check-input]:checked').each(function(){
+                    genres.push(this.value);
+                });
                 var year = $("#movie-year").val();
-                //'img': 'dummyimg', 'trailer': 'dummy',
-                $.post('http://localhost:8008/public/movie', {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genre}, function(data){
+                $.post('http://localhost:8008/public/movie', {'judul': title, 'tahun': year, 'sinopsis': sinopsis, 'genre': genres.toString()}, function(data){
                     if(data['status'] == 0){
                         alert(data['msg']);
                     }else{
                         load_data();
                         $("#movie-title").val('');
                         $("#movie-sinopsis").val('');
-                        $("#movie-genre").val('');
+                        $('input[class=form-check-input]').prop('checked',false);
                         $("#movie-year").val('');
                         $("#add-movie-modal").modal('hide');
                     }
