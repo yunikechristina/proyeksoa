@@ -573,7 +573,6 @@ $app->post('/detail_artis',function (Request $request, Response $response, array
     global $db;
     $data = $request->getParsedBody();
     $dtl_model = new detail_artis($db);
-    //($nama_file, $tipe, $dataa, $ukuran, $id_movie)
     $body = $dtl_model->add_detail_artis($data['peran'], $data['id_artis'], $data['id_movie']);
     $response->getBody()->write(json_encode($body));
 
