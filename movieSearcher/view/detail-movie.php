@@ -272,7 +272,7 @@
 
         function load_data(id){
             $("#trailer-table").html('');
-            $.get('http://localhost:8008/public/trailer/search/'+id,{}, function(data){
+            $.get('http://192.168.254.216:8008/public/trailer/search/'+id,{}, function(data){
                 $.each(data, function(index,value){
                     // <td><button class="btn btn-warning" onclick="load_movie(' + value['id'] + ')">Edit</button></td>
                     var line = '<tr><td>' + (index + 1) + '</td><td><iframe width="420" height="315" src="'+value['link']+'"></iframe></td><td><button style="margin-right:10px;" class="btn btn-success" onclick="load_trailer(' + value['id'] + ')">Edit</button><button class="btn btn-danger" onclick="delete_trailer(' + value['id'] + ')">Delete</button></td></tr>';
@@ -293,7 +293,7 @@
             });
         }
         function load_trailer(id){
-            $.get('http://localhost:8800/public/trailer/' + id, {}, function(data){
+            $.get('http://192.168.254.216:8800/public/trailer/' + id, {}, function(data){
                 $("#edit-trailer-link").val(data['link']);
                 $("#edit-trailer-id-movie").val(data['id_movie']);
                 $("#edit-trailer-submit").data('id', id);
@@ -332,7 +332,7 @@
 
         //PORT VIEW
         function delete_trailer(id){
-            $.delete('http://localhost:8008/public/trailer/' + id, {"_METHOD": "DELETE"}, function(data){
+            $.delete('http://192.168.254.216:8008/public/trailer/' + id, {"_METHOD": "DELETE"}, function(data){
                 if(data['status'] == 0){
                     alert(data['msg']);
                 }else{
@@ -345,7 +345,7 @@
             var id = $("#edit-trailer-submit").data('id');
             var link = $("#edit-trailer-link").val();
             var id_movie = $("#edit-trailer-id-movie").val();
-            $.put('http://localhost:8008/public/trailer/' + id, {'link': link, 'id_movie': id_movie}, function(data){
+            $.put('http://192.168.254.216:8008/public/trailer/' + id, {'link': link, 'id_movie': id_movie}, function(data){
                 if(data['status'] == 0){
                     alert(data['msg']);
                 }else{
@@ -396,7 +396,7 @@
             $("#add-trailer-submit").click(function(){
                 var link = $("#add-trailer-link").val();
                 var movie_id = $("#add-movie-id").val();
-                $.post('http://localhost:8008/public/trailer', {'link': link, 'id_movie': movie_id}, function(data){
+                $.post('http://192.168.254.216:8008/public/trailer', {'link': link, 'id_movie': movie_id}, function(data){
                     if(data['status'] == 0){
                         alert(data['msg']);
                     }else{
