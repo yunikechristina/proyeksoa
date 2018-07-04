@@ -68,26 +68,36 @@ session_start();
             </div>
     </div>
     <div id="page-wrapper">
-    	<div class="container-fluid">
-    		<div class="row row bg-title"><div class="col"><h1>Artist List</h1></div>
+        <div class="container-fluid">
+            <div class="row row bg-title">
+                <div class="col">
+                    <h1 style="display: inline-block;">Artist List List</h1>
+                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-movie-modal">Add Artist</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline">
+                    <input class="form-control mr-sm-2" id="search-movie-keyword" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-movie-submit">Search</button>
+                </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-hover" id>
                     <thead>
                         <tr>
                             <th width="10%">#</th>
-                            <th width="80%">Nama</th>
+                            <th width="90%">Nama</th>
                         </tr>
                     </thead>
-                    <tbody id="artis-table">
+                    <tbody id="artist-table">
 
                     </tbody>
                 </table>
             </div>
         </div>
-    		</div>
-    	</div>
-	</div>
+
+    </div>
 
   <!-- ADD ARTIS MODAL -->
       <div class="modal fade" role="dialog" id="add-movie-modal" data-keyboard="false" data-backdrop="static">
