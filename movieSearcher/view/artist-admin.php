@@ -68,13 +68,87 @@ session_start();
             </div>
     </div>
     <div id="page-wrapper">
-    	<div class="container-fluid">
-    		<div class="row row bg-title"><div class="col"><h1>Artist List</h1></div>
-    		</div>
-    	</div>
-	</div>
+        <div class="container-fluid">
+            <div class="row row bg-title">
+                <div class="col">
+                    <h1 style="display: inline-block;">Artist List List</h1>
+                    <button class="btn btn-success" style="margin-top: 15px; float: right;" data-toggle="modal" data-target="#add-movie-modal">Add Artist</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline">
+                    <input class="form-control mr-sm-2" id="search-movie-keyword" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" id="search-movie-submit">Search</button>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover" id>
+                    <thead>
+                        <tr>
+                            <th width="10%">#</th>
+                            <th width="90%">Nama</th>
+                        </tr>
+                    </thead>
+                    <tbody id="artist-table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+  <!-- ADD ARTIS MODAL -->
+      <div class="modal fade" role="dialog" id="add-movie-modal" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+                  <h3 class="modal-title">Add Artis</h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <label for="nama-artis">Nama: </label>
+                      <input type="text" id="nama_artis" class="form-control" placeholder="Artist Name">
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="add-movie-submit">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+              </div>
+          </div>
+      </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    function load_data(){
+        $("#artis-table").html('');
+        $.get('http://localhost:8008/public/artis',{}, function(data){
+            $.each(data, function(index,value){
+                var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama'] + '</td><button class="btn btn-danger" onclick="delete_artis(' + value['id'] + ')">Delete</button></td></tr>';
+                $('#movie-table').append(line);
+            });
+        });
+    }
+    function delete_artis(id){
+        $.delete('http://localhost:8008/public/artis/' + id, {"_METHOD": "DELETE"}, function(data){
+            if(data['status'] == 0){
+                alert(data['msg']);
+            }else{
+                load_data();
+            }
+        });
+    }
+
+
+
+
+    </script>
 </body>
 </html>
