@@ -43,7 +43,7 @@ class image{
       'id'=>$this->id,
       'nama_file'=>$this->nama_file,
       'tipe'=>$this->tipe,
-      'dataa'=>$this->base64_encode(dataa),
+      'dataa'=>$this->array_map('utf8_encode',base64_encode(dataa)),
       'id_movie'=>$this->id_movie
     );
   }

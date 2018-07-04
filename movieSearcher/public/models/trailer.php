@@ -12,7 +12,7 @@ class trailer{
 
   	public function load($id) {
     	$sql = "SELECT * FROM trailer WHERE id = ".$id;
-    	$res = mysqli_query($this->db->con, $sql);
+    	$res = mysqli_query($this->db->con2, $sql);
     	$data = mysqli_fetch_assoc($res);
     	$this->id = $data['id'];
     	$this->link = $data['link'];
@@ -21,7 +21,7 @@ class trailer{
 
   	public function load_all() {
     	$sql = "SELECT * FROM trailer";
-    	$res = mysqli_query($this->db->con, $sql);
+    	$res = mysqli_query($this->db->con2, $sql);
     	$return = array();
    		while ($row = mysqli_fetch_assoc($res)) {
       		$return[] = $row;
@@ -40,7 +40,7 @@ class trailer{
   	public function add_trailer($link,$id_movie){
       $link = 'https://www.youtube.com/embed/'.$link;
     	$sql = "INSERT INTO trailer VALUES(default, '".$link."',".$id_movie.")";
-   		$res = mysqli_query($this->db->con, $sql);
+   		$res = mysqli_query($this->db->con2, $sql);
     	if ($res){
         	return array('status' => 1, 'msg' => 'Success');
     	}else{
@@ -51,7 +51,7 @@ class trailer{
   	public function edit_trailer($link,$id_movie){
       $link = 'https://www.youtube.com/embed/'.$link;
     	$sql = "UPDATE trailer SET link='".$link."', id_movie=".$id_movie." WHERE id =".$this->id;
-    	$res = mysqli_query($this->db->con, $sql);
+    	$res = mysqli_query($this->db->con2, $sql);
     	if ($res){
         	return array('status' => 1, 'msg' => 'Success');
     	}else{
@@ -61,7 +61,7 @@ class trailer{
 
   	public function delete_trailer(){
    		$sql = "DELETE FROM trailer WHERE id =".$this->id;
-    	$res = mysqli_query($this->db->con, $sql);
+    	$res = mysqli_query($this->db->con2, $sql);
     	if ($res) {
       		return array('status'=>1, 'msg'=>'Success');
     	} else {
@@ -71,7 +71,7 @@ class trailer{
 
 	public function search_trailer_by_movie($id_movie){
     	$sql = "SELECT * FROM trailer WHERE id_movie = ".$id_movie;
-    	$res = mysqli_query($this->db->con, $sql);
+    	$res = mysqli_query($this->db->con2, $sql);
     	$return = array();
     	while ($row = mysqli_fetch_assoc($res)) {
      		 $return[] = $row;

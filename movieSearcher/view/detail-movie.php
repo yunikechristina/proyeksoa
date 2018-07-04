@@ -280,17 +280,17 @@
                 });
             });
 
-            // $("#image-table").html('');
-            // $.get('http://localhost:8008/public/image/search/'+id,{}, function(data){
-            //     $.each(data, function(index,value){
-            //         //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
-            //         var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama_file'] + '</td><td><img id="myimg" width="420" height="315" src="data:'+value['tipe']+';base64,' + value['data'] +'" /></td><td><button class="btn btn-danger" onclick="delete_image(' + value['id'] + ')">Delete</button></td></tr>';
-            //         $('#image-table').append(line);
+            $("#image-table").html('');
+            $.get('http://localhost:8008/public/image/search/'+id,{}, function(data){
+                $.each(data, function(index,value){
+                    //echo '<img src="data:'.$result['tipe'].';base64,'.base64_encode($result['data']).'"/>';
+                    var line = '<tr><td>' + (index + 1) + '</td><td>' + value['nama_file'] + '</td><td><img id="myimg" width="420" height="315" src="data:'+value['tipe']+';base64,' + value['data'] +'" /></td><td><button class="btn btn-danger" onclick="delete_image(' + value['id'] + ')">Delete</button></td></tr>';
+                    $('#image-table').append(line);
 
-            //         //$('#myimg').attr('src', "data:image/"+ value['tipe'] +";base64,"+value['data'])
-            //         //$('#image-table').append(line);
-            //     });
-            // });
+                    //$('#myimg').attr('src', "data:image/"+ value['tipe'] +";base64,"+value['data'])
+                    //$('#image-table').append(line);
+                });
+            });
         }
         function load_trailer(id){
             $.get('http://localhost:8800/public/trailer/' + id, {}, function(data){
